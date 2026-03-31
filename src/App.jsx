@@ -5,6 +5,8 @@ import { useFavorites } from "./hooks/useFavorites"
 import AffirmationCard from "./components/AffirmationCard"
 import FunkyButton from "./components/FunkyButton"
 import FavoritesList from "./components/FavoritesList"
+import html2canvas from "html2canvas"
+import QuoteImageTemplate from "./components/QuoteImageTemplate"
 
 const floatingIcons = [
   { icon: "⭐", x: "10%", delay: 0 },
@@ -13,7 +15,7 @@ const floatingIcons = [
   { icon: "⚡", x: "65%", delay: 0.2 },
   { icon: "🔮", x: "90%", delay: 1 },
   { icon: "✦",  x: "45%", delay: 0.6 },
-  {icon:"✨", x: "50%", delay: 1.2}
+  { icon: "✨", x: "50%", delay: 1.2 },
 ]
 
 function shuffle(arr) {
@@ -31,12 +33,10 @@ export default function App() {
   const [copied, setCopied] = useState(false)
   const { favorites, toggleFavorite, isFavorite } = useFavorites()
 
-  // Shuffled deck and pointer — both live in refs
   const deckRef = useRef(shuffle(affirmations))
   const pointerRef = useRef(0)
+  const templateRef = useRef(null)  // ✅ now inside the component
 
-  // Skip index 0 since that's the initial card shown
-  // Find where affirmations[0] landed and start after it
   useState(() => {
     const startIdx = deckRef.current.findIndex((a) => a.id === affirmations[0].id)
     pointerRef.current = (startIdx + 1) % deckRef.current.length
@@ -45,14 +45,11 @@ export default function App() {
   const handleNewAffirmation = useCallback(() => {
     if (isLoading) return
     setIsLoading(true)
-
     setTimeout(() => {
-      // If we've gone through the whole deck, reshuffle
       if (pointerRef.current >= deckRef.current.length) {
         deckRef.current = shuffle(affirmations)
         pointerRef.current = 0
       }
-
       const next = deckRef.current[pointerRef.current]
       pointerRef.current += 1
       setCurrent(next)
@@ -66,11 +63,36 @@ export default function App() {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  // ✅ now inside the component
+  async function handleSaveImage() {
+    const canvas = await html2canvas(templateRef.current, {
+      backgroundColor: null,
+      scale: 2,
+      useCORS: true,
+    })
+    const link = document.createElement("a")
+    link.download = "deluludose.png"
+    link.href = canvas.toDataURL("image/png")
+    link.click()
+  }
+
+  // ✅ now inside the component
+  async function handleShareLink() {
+    const text = `✨ ${current.text}\n\n— DeluluDose`
+    const url = window.location.href
+    if (navigator.share) {
+      try {
+        await navigator.share({ text, url })
+      } catch (err) {}
+    } else {
+      const encoded = encodeURIComponent(`${text}\n${url}`)
+      window.open(`https://wa.me/?text=${encoded}`, "_blank")
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#0d0a14] flex flex-col items-center justify-center px-4 py-12 overflow-hidden relative">
 
-      {/* Floating bouncing icons */}
       {floatingIcons.map(({ icon, x, delay }, i) => (
         <motion.span
           key={i}
@@ -83,7 +105,6 @@ export default function App() {
         </motion.span>
       ))}
 
-      {/* App name */}
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -102,41 +123,64 @@ export default function App() {
         your daily reality check ✦
       </motion.p>
 
-      {/* Card */}
       <AffirmationCard
         affirmation={current}
         isFavorite={isFavorite(current.id)}
         onToggleFavorite={toggleFavorite}
       />
 
-      {/* Copy button */}
-      <motion.button
-        onClick={handleCopy}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="mt-4 text-sm text-purple-400/70 hover:text-purple-300 transition-colors cursor-pointer"
-      >
-        {copied ? "✅ Copied!" : "📋 Copy quote"}
-      </motion.button>
+      {/* Action buttons row */}
+      <div className="mt-4 flex items-center gap-5">
+        <motion.button
+          onClick={handleShareLink}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="text-sm text-purple-400/70 hover:text-purple-300 transition-colors cursor-pointer flex items-center gap-1.5"
+        >
+          🔗 Share
+        </motion.button>
 
-      {/* Funky Button */}
+        <span className="text-purple-800">|</span>
+
+        <motion.button
+          onClick={handleCopy}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="text-sm text-purple-400/70 hover:text-purple-300 transition-colors cursor-pointer"
+        >
+          {copied ? "✅ Copied!" : "📋 Copy"}
+        </motion.button>
+
+        <span className="text-purple-800">|</span>
+
+        <motion.button
+          onClick={handleSaveImage}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="text-sm text-purple-400/70 hover:text-purple-300 transition-colors cursor-pointer flex items-center gap-1.5"
+        >
+          🖼️ Save image
+        </motion.button>
+      </div>
+
+      <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
+
       <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
 
-      {/* Favorites */}
       <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
-       {/* Footer */}
-    <motion.p
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.8 }}
-      className="mt-16 text-xs text-purple-400/40 tracking-wide text-center"
-    >
-      Made with Delusion & Determination by{" "}
-      <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent font-semibold">
-        Somya
-      </span>{" "}
-      💜
-    </motion.p>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        className="mt-16 text-xs text-purple-400/40 tracking-wide text-center"
+      >
+        Made with Delusion & Determination by{" "}
+        <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent font-semibold">
+          Somya
+        </span>{" "}
+        💜
+      </motion.p>
     </div>
   )
 }
