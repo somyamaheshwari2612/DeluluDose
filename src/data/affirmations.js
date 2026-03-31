@@ -1,5 +1,5 @@
 const affirmations = [
-  { id: 1, text: "You are exactly where you need to be — which is here, reading this. Hi! 👋", category: "motivational" },
+  { id: 1, text: "You already know what to do. You’re just not doing it.", category: "savage" },
   { id: 2, text: "You're not lazy, you're in energy-saving mode. A true innovator.", category: "funny" },
   { id: 3, text: "You are the main character. The side characters just don't know it yet.", category: "motivational" },
   { id: 4, text: "Your potential is only limited by your Wi-Fi speed.", category: "funny" },
@@ -91,7 +91,7 @@ const affirmations = [
   { id: 90, text: "No one is coming to save you. Start moving.", category: "savage" },
   { id: 91, text: "Your future self is tired of your current excuses.", category: "savage" },
   { id: 92, text: "Discipline is choosing what you want most over what you want now.", category: "savage" },
-  { id: 93, text: "You already know what to do. You’re just not doing it.", category: "savage" },
+  { id: 93, text: "You are exactly where you need to be — which is here, reading this. Hi! 👋", category: "motivational" },
   { id: 94, text: "Stop negotiating with your comfort zone.", category: "savage" },
   { id: 95, text: "Results don’t care about your mood.", category: "savage" },
   { id: 96, text: "You’re capable. You’re just inconsistent.", category: "savage" },
