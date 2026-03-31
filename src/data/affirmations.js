@@ -1,5 +1,5 @@
 const affirmations = [
-  { id: 1, text: "You are a limited edition human in a world of copy-paste people. 💅", category: "funny" },
+  { id: 1, text: "You are exactly where you need to be — which is here, reading this. Hi! 👋", category: "motivational" },
   { id: 2, text: "You're not lazy, you're in energy-saving mode. A true innovator.", category: "funny" },
   { id: 3, text: "You are the main character. The side characters just don't know it yet.", category: "motivational" },
   { id: 4, text: "Your potential is only limited by your Wi-Fi speed.", category: "funny" },
@@ -8,7 +8,7 @@ const affirmations = [
   { id: 7, text: "Somewhere, someone is proud of how far you've come. Probably your dog.", category: "funny" },
   { id: 8, text: "You are built different. Like, genuinely weird. That's the compliment.", category: "funny" },
   { id: 9, text: "Great things take time. You're basically aged like fine cheese.", category: "motivational" },
-  { id: 10, text: "You are exactly where you need to be — which is here, reading this. Hi! 👋", category: "motivational" },
+  { id: 10, text:  "You are a limited edition human in a world of copy-paste people. 💅", category: "funny"},
    { id: 11, text: "Drink some water. You are basically a houseplant with complicated emotions.", category: "funny" },
   { id: 12, text: "Your anxiety is lying to you. And honestly? It’s not even good at it.", category: "funny" },
   { id: 13, text: "You’ve survived 100% of your bad days so far. Kinda iconic.", category: "motivational" },
