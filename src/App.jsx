@@ -13,6 +13,7 @@ const floatingIcons = [
   { icon: "⚡", x: "65%", delay: 0.2 },
   { icon: "🔮", x: "90%", delay: 1 },
   { icon: "✦",  x: "45%", delay: 0.6 },
+  {icon:"✨", x: "50%", delay: 1.2}
 ]
 
 function shuffle(arr) {
