@@ -158,7 +158,27 @@ const affirmations = [
   { id: 157, text: "You’ve got the potential. Now add consistency.", category: "roast" },
   { id: 158, text: "You’re close. But you keep stopping.", category: "roast" },
   { id: 159, text: "You’ve been thinking about it longer than it would take to do it.", category: "roast" },
-  { id: 160, text: "You don’t need another push. You need a start.", category: "roast" }
+  { id: 160, text: "You don’t need another push. You need a start.", category: "roast" },
+  { id: 161, text: "You again? Damn… my favorite notification.", category: "flirty" },
+  { id: 162, text: "If confidence looked like someone, it would look a lot like you.", category: "flirty" },
+  { id: 163, text: "Careful… you’re getting dangerously attractive today.", category: "flirty" },
+  { id: 164, text: "You’ve got that ‘main character people fall for’ energy.", category: "flirty" },
+  { id: 165, text: "I’d say focus on your goals… but you’re kinda distracting.", category: "flirty" },
+  { id: 166, text: "Not to be dramatic, but you’re exactly someone’s type.", category: "flirty" },
+  { id: 167, text: "You walk in and suddenly the room has better taste.", category: "flirty" },
+  { id: 168, text: "You’re not even trying, and it’s working.", category: "flirty" },
+  { id: 169, text: "You’re the kind of person people remember for no reason… and every reason.", category: "flirty" },
+  { id: 170, text: "You’ve got charm. Dangerous amounts of it.", category: "flirty" },
+  { id: 171, text: "If confidence is attractive, you’re basically irresistible.", category: "flirty" },
+  { id: 172, text: "Someone out there has a crush on you. Probably more than one.", category: "flirty" },
+  { id: 173, text: "You make eye contact and suddenly people forget what they were saying.", category: "flirty" },
+  { id: 174, text: "You’re not flirting. You’re just naturally this likable.", category: "flirty" },
+  { id: 175, text: "You’ve got that ‘don’t fall for me’ energy… which makes it worse.", category: "flirty" },
+  { id: 176, text: "You’re the reason someone checked their phone and smiled today.", category: "flirty" },
+  { id: 177, text: "You don’t chase attention. It just… finds you.", category: "flirty" },
+  { id: 178, text: "You’re dangerously close to being someone’s favorite person.", category: "flirty" },
+  { id: 179, text: "You’ve got that quiet confidence that makes people curious.", category: "flirty" },
+  { id: 180, text: "Honestly? You’d be hard to forget.", category: "flirty" }
 ]
 
 
