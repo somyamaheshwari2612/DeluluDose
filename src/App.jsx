@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react"
+import { useState, useRef, useCallback, useEffect } from "react"
 import { motion } from "framer-motion"
 import affirmations from "./data/affirmations"
 import { useFavorites } from "./hooks/useFavorites"
@@ -25,6 +25,39 @@ function shuffle(arr) {
     ;[a[i], a[j]] = [a[j], a[i]]
   }
   return a
+}
+
+const names = ["SM 💜", "Somya 💜"]
+
+function FlippingName() {
+  const [index, setIndex] = useState(0)
+  const [flipping, setFlipping] = useState(false)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFlipping(true)
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % names.length)
+        setFlipping(false)
+      }, 400) // halfway through flip, swap the text
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <motion.span
+      animate={
+        flipping
+          ? { rotateX: 90, opacity: 0, y: -6 }
+          : { rotateX: 0, opacity: 1, y: 0 }
+      }
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      style={{ display: "inline-block", transformOrigin: "bottom center", perspective: 400 }}
+      className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent font-semibold"
+    >
+      {names[index]}
+    </motion.span>
+  )
 }
 
 export default function App() {
@@ -170,17 +203,14 @@ export default function App() {
       <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
 
       <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="mt-16 text-xs text-purple-400/40 tracking-wide text-center"
-      >
-        Made with Delusion & Determination by{" "}
-        <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent font-semibold">
-          Somya
-        </span>{" "}
-        💜
-      </motion.p>
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.8 }}
+      className="mt-16 text-xs text-purple-400/40 tracking-wide text-center"
+    >
+      Made with Delusion & Determination by{" "}
+      <FlippingName />
+    </motion.p>
     </div>
   )
 }
