@@ -29,7 +29,7 @@ function shuffle(arr) {
   return a
 }
 
-const names = ["SM 💜", "Somya 💜"]
+const names = ["SM 💜", "Somya 💜","SaMi 💜"]
 
 function FlippingName() {
   const [index, setIndex] = useState(0)
