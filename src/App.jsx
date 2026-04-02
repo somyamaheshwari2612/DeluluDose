@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react"
 import { useState, useRef, useCallback, useEffect } from "react"
 import { motion } from "framer-motion"
 import affirmations from "./data/affirmations"
@@ -7,6 +8,7 @@ import FunkyButton from "./components/FunkyButton"
 import FavoritesList from "./components/FavoritesList"
 import html2canvas from "html2canvas"
 import QuoteImageTemplate from "./components/QuoteImageTemplate"
+
 
 const floatingIcons = [
   { icon: "⭐", x: "10%", delay: 0 },
@@ -211,6 +213,7 @@ export default function App() {
       Made with Delusion & Determination by{" "}
       <FlippingName />
     </motion.p>
+    <Analytics />
     </div>
   )
 }
