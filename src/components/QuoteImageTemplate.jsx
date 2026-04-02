@@ -73,7 +73,7 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         margin: "0",
         flexShrink: 0,
       }}>
-        DeluluDose ✦ by SM 💜
+        DeluluDose ✦ by Somya 💜
       </p>
     </div>
   )
