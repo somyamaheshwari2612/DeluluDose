@@ -1,3 +1,5 @@
+import MoodReactions from "./components/MoodReactions"
+import { useMoods } from "./hooks/useMoods"
 import { Analytics } from "@vercel/analytics/react"
 import { useState, useRef, useCallback, useEffect } from "react"
 import { motion } from "framer-motion"
@@ -67,7 +69,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [copied, setCopied] = useState(false)
   const { favorites, toggleFavorite, isFavorite } = useFavorites()
-
+  const { recentMoods, addMood } = useMoods()
   const deckRef = useRef(shuffle(affirmations))
   const pointerRef = useRef(0)
   const templateRef = useRef(null)  // ✅ now inside the component
@@ -163,7 +165,9 @@ export default function App() {
         isFavorite={isFavorite(current.id)}
         onToggleFavorite={toggleFavorite}
       />
-
+      <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
+      <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
+      
       {/* Action buttons row */}
       <div className="mt-4 flex items-center gap-5">
         <motion.button
@@ -200,7 +204,6 @@ export default function App() {
 
       <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
 
-      <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
 
       <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
 

@@ -1,9 +1,35 @@
 import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+
+const BUTTON_LABELS = [
+  "✨ Give me a dose",
+  "💜 Hit me again",
+  "🔮 Another one",
+  "⚡ Refill please",
+  "🫠 I need this",
+  "💫 Keep it coming",
+  "😎 Next dose pls",
+  "🌙 One more won't hurt",
+]
 
 export default function FunkyButton({ onClick, isLoading }) {
+  const [labelIndex, setLabelIndex] = useState(0)
+  const [labelVisible, setLabelVisible] = useState(true)
+
+  // Change label every time button is clicked
+  function handleClick() {
+    if (isLoading) return
+    onClick()
+    setLabelVisible(false)
+    setTimeout(() => {
+      setLabelIndex((prev) => (prev + 1) % BUTTON_LABELS.length)
+      setLabelVisible(true)
+    }, 300)
+  }
+
   return (
     <motion.button
-      onClick={onClick}
+      onClick={handleClick}
       disabled={isLoading}
       whileHover={!isLoading ? { scale: 1.08, rotate: -2 } : {}}
       whileTap={!isLoading ? { scale: 0.93, rotate: 2 } : {}}
@@ -14,7 +40,7 @@ export default function FunkyButton({ onClick, isLoading }) {
         text-white shadow-lg shadow-fuchsia-700/40
         hover:shadow-fuchsia-500/60 hover:shadow-xl
         transition-all duration-300 cursor-pointer select-none
-        flex items-center gap-3
+        flex items-center gap-3 min-w-[220px] justify-center
         ${isLoading ? "opacity-70 cursor-not-allowed" : ""}
       `}
     >
@@ -25,16 +51,30 @@ export default function FunkyButton({ onClick, isLoading }) {
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Spinning refresh icon */}
-      <motion.span
-        animate={isLoading ? { rotate: 360 } : { rotate: 0 }}
-        transition={isLoading ? { duration: 0.6, repeat: Infinity, ease: "linear" } : {}}
-        className="text-xl"
-      >
-        ✨
-      </motion.span>
+      {/* Spinning icon when loading */}
+      {isLoading && (
+        <motion.span
+          animate={{ rotate: 360 }}
+          transition={{ duration: 0.6, repeat: Infinity, ease: "linear" }}
+          className="text-xl"
+        >
+          ✨
+        </motion.span>
+      )}
 
-      {isLoading ? "Loading..." : "Give me a dose"}
+      {/* Dynamic label */}
+      {isLoading ? (
+        "Loading..."
+      ) : (
+        <motion.span
+          key={labelIndex}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: labelVisible ? 1 : 0, y: labelVisible ? 0 : -6 }}
+          transition={{ duration: 0.25 }}
+        >
+          {BUTTON_LABELS[labelIndex]}
+        </motion.span>
+      )}
     </motion.button>
   )
 }
