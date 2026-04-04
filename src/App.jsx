@@ -10,6 +10,8 @@ import FunkyButton from "./components/FunkyButton"
 import FavoritesList from "./components/FavoritesList"
 import html2canvas from "html2canvas"
 import QuoteImageTemplate from "./components/QuoteImageTemplate"
+import StreakDisplay from "./components/StreakDisplay"
+import { useStreak } from "./hooks/useStreak"
 
 
 const floatingIcons = [
@@ -70,6 +72,7 @@ export default function App() {
   const [copied, setCopied] = useState(false)
   const { favorites, toggleFavorite, isFavorite } = useFavorites()
   const { recentMoods, addMood } = useMoods()
+  const { streak, isNewDay } = useStreak()
   const deckRef = useRef(shuffle(affirmations))
   const pointerRef = useRef(0)
   const templateRef = useRef(null)  // ✅ now inside the component
@@ -159,8 +162,7 @@ export default function App() {
       >
         your daily reality check ✦
       </motion.p>
-
-      <AffirmationCard
+      <StreakDisplay streak={streak} isNewDay={isNewDay} position="top" />        <AffirmationCard
         affirmation={current}
         isFavorite={isFavorite(current.id)}
         onToggleFavorite={toggleFavorite}
@@ -206,8 +208,7 @@ export default function App() {
 
 
       <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
-
-      <motion.p
+      <StreakDisplay streak={streak} isNewDay={isNewDay} position="bottom" />      <motion.p
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.8 }}
