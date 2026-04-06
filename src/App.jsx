@@ -2,7 +2,7 @@ import MoodReactions from "./components/MoodReactions"
 import { useMoods } from "./hooks/useMoods"
 import { Analytics } from "@vercel/analytics/react"
 import { useState, useRef, useCallback, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import affirmations from "./data/affirmations"
 import { useFavorites } from "./hooks/useFavorites"
 import AffirmationCard from "./components/AffirmationCard"
@@ -12,7 +12,6 @@ import html2canvas from "html2canvas"
 import QuoteImageTemplate from "./components/QuoteImageTemplate"
 import StreakDisplay from "./components/StreakDisplay"
 import { useStreak } from "./hooks/useStreak"
-
 
 const floatingIcons = [
   { icon: "⭐", x: "10%", delay: 0 },
@@ -24,6 +23,20 @@ const floatingIcons = [
   { icon: "✨", x: "50%", delay: 1.2 },
 ]
 
+const RETURNING_MESSAGES = [
+  "You were here last time. Ready to go deeper? ✦",
+  "Welcome back. Time to explore beyond this. 💜",
+  "Still you. Still here. Still growing. ❤️‍🔥",
+  "Back again? The delusion continues. 😎",
+  "Your doses missed you. Let's go. ✨",
+  "Returning users get extra potent doses. 🔮",
+]
+
+function getDailyReturningMessage() {
+  const day = new Date().getDay()
+  return RETURNING_MESSAGES[day % RETURNING_MESSAGES.length]
+}
+
 function shuffle(arr) {
   const a = [...arr]
   for (let i = a.length - 1; i > 0; i--) {
@@ -33,7 +46,40 @@ function shuffle(arr) {
   return a
 }
 
-const names = ["SM 💜", "Somya 💜","SaMi 💜"]
+// Build initial deck — affirmations[0] locked first on first ever visit
+function buildInitialDeck() {
+  const isFirstEver = !localStorage.getItem("deluludose-visited")
+  if (isFirstEver) {
+    localStorage.setItem("deluludose-visited", "true")
+    return [affirmations[0], ...shuffle(affirmations.slice(1))]
+  }
+  // Returning user — fully shuffle everything
+  return shuffle(affirmations)
+}
+
+// Load persisted deck or build fresh one
+function loadDeck() {
+  try {
+    const saved = localStorage.getItem("deluludose-deck")
+    const pointer = parseInt(localStorage.getItem("deluludose-pointer") || "0")
+    if (saved) {
+      const deck = JSON.parse(saved)
+      // Validate deck has same length as affirmations (in case new ones were added)
+      if (deck.length === affirmations.length) {
+        return { deck, pointer }
+      }
+    }
+  } catch {}
+  const deck = buildInitialDeck()
+  return { deck, pointer: 0 }
+}
+
+function saveDeck(deck, pointer) {
+  localStorage.setItem("deluludose-deck", JSON.stringify(deck))
+  localStorage.setItem("deluludose-pointer", pointer.toString())
+}
+
+const names = ["SM 💜", "Somya 💜", "SaMi 💜"]
 
 function FlippingName() {
   const [index, setIndex] = useState(0)
@@ -45,7 +91,7 @@ function FlippingName() {
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % names.length)
         setFlipping(false)
-      }, 400) // halfway through flip, swap the text
+      }, 400)
     }, 5000)
     return () => clearInterval(interval)
   }, [])
@@ -67,31 +113,53 @@ function FlippingName() {
 }
 
 export default function App() {
-  const [current, setCurrent] = useState(affirmations[0])
+  // Load persisted deck on mount
+  const { deck: initialDeck, pointer: initialPointer } = loadDeck()
+
+  const deckRef = useRef(initialDeck)
+  const pointerRef = useRef(initialPointer)
+  const templateRef = useRef(null)
+
+  const isReturning = !!localStorage.getItem("deluludose-visited")
+  const [showReturningMsg, setShowReturningMsg] = useState(isReturning)
+
+  // Start from where we left off
+  const [current, setCurrent] = useState(
+    initialDeck[initialPointer] || affirmations[0]
+  )
   const [isLoading, setIsLoading] = useState(false)
   const [copied, setCopied] = useState(false)
+
   const { favorites, toggleFavorite, isFavorite } = useFavorites()
   const { recentMoods, addMood } = useMoods()
   const { streak, isNewDay } = useStreak()
-  const deckRef = useRef(shuffle(affirmations))
-  const pointerRef = useRef(0)
-  const templateRef = useRef(null)  // ✅ now inside the component
 
-  useState(() => {
-    const startIdx = deckRef.current.findIndex((a) => a.id === affirmations[0].id)
-    pointerRef.current = (startIdx + 1) % deckRef.current.length
-  })
+  // Hide returning message after 4 seconds
+  useEffect(() => {
+    if (showReturningMsg) {
+      const t = setTimeout(() => setShowReturningMsg(false), 4000)
+      return () => clearTimeout(t)
+    }
+  }, [])
 
   const handleNewAffirmation = useCallback(() => {
     if (isLoading) return
     setIsLoading(true)
     setTimeout(() => {
-      if (pointerRef.current >= deckRef.current.length) {
+      let pointer = pointerRef.current + 1
+
+      // Full cycle done — reshuffle
+      if (pointer >= deckRef.current.length) {
         deckRef.current = shuffle(affirmations)
-        pointerRef.current = 0
+        pointer = 0
       }
-      const next = deckRef.current[pointerRef.current]
-      pointerRef.current += 1
+
+      const next = deckRef.current[pointer]
+      pointerRef.current = pointer
+
+      // Persist so next session continues from here
+      saveDeck(deckRef.current, pointer)
+
       setCurrent(next)
       setIsLoading(false)
     }, 500)
@@ -103,7 +171,6 @@ export default function App() {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  // ✅ now inside the component
   async function handleSaveImage() {
     const canvas = await html2canvas(templateRef.current, {
       backgroundColor: null,
@@ -116,7 +183,6 @@ export default function App() {
     link.click()
   }
 
-  // ✅ now inside the component
   async function handleShareLink() {
     const text = `✨ ${current.text}\n\n— DeluluDose`
     const url = window.location.href
@@ -158,18 +224,41 @@ export default function App() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="text-purple-400/60 text-sm mb-10 tracking-widest uppercase"
+        className="text-purple-400/60 text-sm mb-4 tracking-widest uppercase"
       >
         your daily reality check ✦
       </motion.p>
-      <StreakDisplay streak={streak} isNewDay={isNewDay} position="top" />        <AffirmationCard
+
+      <StreakDisplay streak={streak} isNewDay={isNewDay} position="top" />
+
+      {/* Returning user message */}
+      <AnimatePresence>
+        {showReturningMsg && (
+          <motion.p
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.4 }}
+            className="text-xs text-purple-400/50 tracking-wide italic mb-6 text-center"
+          >
+            {getDailyReturningMessage()}
+          </motion.p>
+        )}
+      </AnimatePresence>
+
+      {/* Spacer when message is gone */}
+      {!showReturningMsg && <div className="mb-6" />}
+
+      <AffirmationCard
         affirmation={current}
         isFavorite={isFavorite(current.id)}
         onToggleFavorite={toggleFavorite}
       />
+
       <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
+
       <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
-      
+
       {/* Action buttons row */}
       <div className="mt-4 flex items-center gap-5">
         <motion.button
@@ -180,9 +269,7 @@ export default function App() {
         >
           🔗 Share
         </motion.button>
-
         <span className="text-purple-800">|</span>
-
         <motion.button
           onClick={handleCopy}
           whileHover={{ scale: 1.05 }}
@@ -191,9 +278,7 @@ export default function App() {
         >
           {copied ? "✅ Copied!" : "📋 Copy"}
         </motion.button>
-
         <span className="text-purple-800">|</span>
-
         <motion.button
           onClick={handleSaveImage}
           whileHover={{ scale: 1.05 }}
@@ -206,18 +291,20 @@ export default function App() {
 
       <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
 
-
       <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
-      <StreakDisplay streak={streak} isNewDay={isNewDay} position="bottom" />      <motion.p
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.8 }}
-      className="mt-16 text-xs text-purple-400/40 tracking-wide text-center"
-    >
-      Made with Delusion & Determination by{" "}
-      <FlippingName />
-    </motion.p>
-    <Analytics />
+
+      <StreakDisplay streak={streak} isNewDay={isNewDay} position="bottom" />
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        className="mt-16 text-xs text-purple-400/40 tracking-wide text-center"
+      >
+        Made with Delusion & Determination by{" "}
+        <FlippingName />
+      </motion.p>
+      <Analytics />
     </div>
   )
 }
