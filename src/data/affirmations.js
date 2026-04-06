@@ -178,7 +178,27 @@ const affirmations = [
   { id: 177, text: "You don’t chase attention. It just… finds you.", category: "flirty" },
   { id: 178, text: "You’re dangerously close to being someone’s favorite person.", category: "flirty" },
   { id: 179, text: "You’ve got that quiet confidence that makes people curious.", category: "flirty" },
-  { id: 180, text: "Honestly? You’d be hard to forget.", category: "flirty" }
+  { id: 180, text: "Honestly? You’d be hard to forget.", category: "flirty" },
+  { id: 181, text: "You don’t have to heal everything at once. One small piece is enough today.", category: "healing" },
+  { id: 182, text: "You’re allowed to feel it fully… and still choose to move forward.", category: "healing" },
+  { id: 183, text: "Not every wound needs a solution right now. Some just need time.", category: "healing" },
+  { id: 184, text: "You’re learning to hold yourself the way you needed others to.", category: "healing" },
+  { id: 185, text: "It’s okay if you’re not who you used to be. You’re becoming someone new.", category: "healing" },
+  { id: 186, text: "You don’t need to rush closure. Peace will come quietly.", category: "healing" },
+  { id: 187, text: "Some things hurt less over time. Not because they mattered less, but because you grew.", category: "healing" },
+  { id: 188, text: "You’re allowed to miss what you had and still choose better for yourself.", category: "healing" },
+  { id: 189, text: "Healing isn’t about forgetting. It’s about remembering without breaking.", category: "healing" },
+  { id: 190, text: "You’re not weak for feeling deeply. That’s where your strength lives.", category: "healing" },
+  { id: 191, text: "It’s okay if some days feel heavier. You’re still carrying yourself through them.", category: "healing" },
+  { id: 192, text: "You don’t have to explain your healing to anyone. It’s yours.", category: "healing" },
+  { id: 193, text: "The version of you that survived deserved more softness. Give it now.", category: "healing" },
+  { id: 194, text: "You’re allowed to outgrow what once felt like home.", category: "healing" },
+  { id: 195, text: "Healing looks like choosing yourself, even when it’s uncomfortable.", category: "healing" },
+  { id: 196, text: "You’re not behind in healing. You’re exactly where your heart can handle.", category: "healing" },
+  { id: 197, text: "Some days you bloom. Some days you just breathe. Both count.", category: "healing" },
+  { id: 198, text: "You’re allowed to take your time becoming okay again.", category: "healing" },
+  { id: 199, text: "You didn’t imagine the pain. But you’re also not stuck in it forever.", category: "healing" },
+  { id: 200, text: "You’re learning that peace doesn’t always come from answers, but from acceptance.", category: "healing" }
 ]
 
 
