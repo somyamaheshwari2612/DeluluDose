@@ -4,13 +4,13 @@ import { motion, AnimatePresence } from "framer-motion"
 const STREAK_MESSAGES = {
   1:  "First dose of the day! 🌱",
   2:  "Two days in. You're warming up 👀",
-  3:  "Day 3! The delusion is becoming discipline 💪",
-  5:  "5 days strong. Main character arc loading... 🎬",
+  3:  "The delusion is becoming discipline 💪",
+  5:  "Main character arc loading... 🎬",
   7:  "A whole week?! You're unhinged. We love it. 🖤",
-  10: "10 days of doses. You're basically a guru now. 🔮",
+  10: "10 doses strong. You're basically a guru now. 🔮",
   14: "Two weeks! The delusion has fully taken over. 💜",
   21: "21 days. This is your personality now. No refunds. 😎",
-  30: "30 days. You didn't come this far to only come this far. 👑",
+  30: "30 doses. You didn't come this far to only come this far. 👑",
 }
 
 const COMEBACK_QUOTES = [
