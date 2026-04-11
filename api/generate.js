@@ -66,6 +66,15 @@ Tone guide:
 - Brutally Honest: truthful, but not inappropriate for the situation
 - Dreamy & Poetic: soft, aesthetic, emotionally accurate
 
+Language rules (CRITICAL):
+- The sentence must be grammatically correct and natural
+- It must read like something a real person would say
+- Avoid awkward phring or forced keyword placement
+- Do not just combine keywords; form a meaningful sentence
+- If keywords don’t fit naturally, rephrase them into a natural expression
+- Prefer clarity over cleverness
+
+
 Creative rules:
 - 1–2 lines maximum
 - Each line max 12 words
