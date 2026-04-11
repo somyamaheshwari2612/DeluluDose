@@ -1,4 +1,8 @@
+import { useThemeContext } from "../contexts/ThemeContext"
+
 const QuoteImageTemplate = ({ affirmation, templateRef }) => {
+  const { isDark } = useThemeContext()
+
   return (
     <div
       ref={templateRef}
@@ -8,7 +12,9 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         left: "-9999px",
         width: "600px",
         height: "600px",
-        background: "linear-gradient(135deg, #0d0a14 0%, #1a1025 50%, #0d0a14 100%)",
+        background: isDark
+          ? "linear-gradient(135deg, #0d0a14 0%, #1a1025 50%, #0d0a14 100%)"
+          : "linear-gradient(135deg, #f0f7ff 0%, #e0f0ff 50%, #f0f7ff 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -18,37 +24,36 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         boxSizing: "border-box",
       }}
     >
-      {/* Top accent */}
       <div style={{
         width: "60px",
         height: "4px",
-        background: "linear-gradient(to right, #a855f7, #ec4899)",
+        background: isDark
+          ? "linear-gradient(to right, #a855f7, #ec4899)"
+          : "linear-gradient(to right, #3b82f6, #06b6d4)",
         borderRadius: "99px",
         marginBottom: "28px",
         flexShrink: 0,
       }} />
 
-      {/* Category */}
       <p style={{
         fontSize: "11px",
-        letterSpacing: "3px",
+        letterSpacing: affirmation.category === "ai-crafted" ? "4px" : "3px",
         textTransform: "uppercase",
-        color: "#a855f7",
+        color: isDark ? "#a855f7" : "#3b82f6",
         margin: "0 0 20px 0",
         flexShrink: 0,
       }}>
         {affirmation.category === "ai-crafted"
-            ? "A DeluluDose Original  ✦"
-            : affirmation.category}
+          ? "A D e l u l u D o s e  O r i g i n a l  ✦"
+          : affirmation.category}
       </p>
 
-      {/* Quote — solid white, no gradient */}
       <p style={{
         fontSize: "24px",
         fontWeight: "700",
         textAlign: "center",
         lineHeight: "1.6",
-        color: "#f3e8ff",
+        color: isDark ? "#f3e8ff" : "#1e3a5f",
         margin: "0 0 32px 0",
         wordBreak: "break-word",
         overflowWrap: "break-word",
@@ -57,25 +62,25 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         {affirmation.text}
       </p>
 
-      {/* Bottom accent */}
       <div style={{
         width: "60px",
         height: "4px",
-        background: "linear-gradient(to right, #a855f7, #ec4899)",
+        background: isDark
+          ? "linear-gradient(to right, #a855f7, #ec4899)"
+          : "linear-gradient(to right, #3b82f6, #06b6d4)",
         borderRadius: "99px",
         marginBottom: "20px",
         flexShrink: 0,
       }} />
 
-      {/* Branding */}
       <p style={{
         fontSize: "13px",
-        color: "rgba(168, 85, 247, 0.6)",
+        color: isDark ? "rgba(168, 85, 247, 0.6)" : "rgba(59, 130, 246, 0.6)",
         letterSpacing: "1px",
         margin: "0",
         flexShrink: 0,
       }}>
-        DeluluDose ✦ by Somya 💜
+        DeluluDose ✦ by SM 💙
       </p>
     </div>
   )

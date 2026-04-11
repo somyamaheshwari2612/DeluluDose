@@ -1,6 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion"
+import { useThemeContext } from "../contexts/ThemeContext"
 
 export default function AffirmationCard({ affirmation, isFavorite, onToggleFavorite }) {
+  const { isDark } = useThemeContext()
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -9,19 +12,26 @@ export default function AffirmationCard({ affirmation, isFavorite, onToggleFavor
         animate={{ opacity: 1, scale: 1, filter: "blur(0px)", y: 0 }}
         exit={{ opacity: 0, scale: 0.88, filter: "blur(10px)", y: -20 }}
         transition={{ duration: 0.45, ease: "easeOut" }}
-        className="relative bg-[#1a1025] border border-purple-800/40 rounded-3xl p-8 shadow-2xl shadow-purple-950/60 max-w-xl w-full"
+        className={`relative rounded-3xl p-8 shadow-2xl max-w-xl w-full transition-colors duration-500 ${
+          isDark
+            ? "bg-[#1a1025] border border-purple-800/40 shadow-purple-950/60"
+            : "bg-sky-900/30 border border-sky-500/30 shadow-sky-900/40 backdrop-blur-sm"
+        }`}
       >
-        {/* Category badge */}
-        <span className="text-xs uppercase tracking-widest text-purple-400 font-semibold">
+        <span className={`text-xs uppercase tracking-widest font-semibold ${
+          isDark ? "text-purple-400" : "text-sky-400"
+        }`}>
           {affirmation.category}
         </span>
 
-        {/* Gradient quote text */}
-        <p className="mt-4 text-xl font-bold leading-relaxed bg-gradient-to-r from-purple-300 via-fuchsia-300 to-pink-300 bg-clip-text text-transparent">
+        <p className={`mt-4 text-xl font-bold leading-relaxed bg-clip-text text-transparent bg-gradient-to-r ${
+          isDark
+            ? "from-purple-300 via-fuchsia-300 to-pink-300"
+            : "from-sky-300 via-cyan-300 to-blue-300"
+        }`}>
           {affirmation.text}
         </p>
 
-        {/* Favorite button */}
         <motion.button
           onClick={() => onToggleFavorite(affirmation)}
           whileHover={{ scale: 1.3 }}
@@ -29,7 +39,7 @@ export default function AffirmationCard({ affirmation, isFavorite, onToggleFavor
           className="absolute top-5 right-5 text-2xl cursor-pointer"
           aria-label="Toggle favorite"
         >
-          {isFavorite ? "💜" : "🤍"}
+          {isFavorite ? (isDark ? "💜" : "💙") : isDark ? "🤍" : "🩵"}
         </motion.button>
       </motion.div>
     </AnimatePresence>

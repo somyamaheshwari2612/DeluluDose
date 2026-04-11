@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useThemeContext } from "../contexts/ThemeContext"
 
 const STREAK_MESSAGES = {
   1:  "First dose of the day! 🌱",
@@ -8,23 +9,21 @@ const STREAK_MESSAGES = {
   5:  "Main character arc loading... 🎬",
   7:  "A whole week?! You're unhinged. We love it. 🖤",
   10: "10 doses strong. You're basically a guru now. 🔮",
-  14: "Two weeks! The delusion has fully taken over. 💜",
+  14: "Two weeks! The delusion has fully taken over. 💙",
   21: "21 days. This is your personality now. No refunds. 😎",
   30: "30 doses. You didn't come this far to only come this far. 👑",
 }
 
 const COMEBACK_QUOTES = [
   "Come back tomorrow. Your future self is counting on it. ✦",
-  "Tomorrow's dose might be the one that changes everything. 💜",
+  "Tomorrow's dose might be the one that changes everything. 💙",
   "The streak won't keep itself alive. See you tomorrow? 🔥",
   "One more day = one more level up. Don't break the chain. ⚡",
   "Your delusion deserves daily maintenance. Come back. 🫠",
 ]
 
 function getStreakMessage(streak) {
-  const milestones = Object.keys(STREAK_MESSAGES)
-    .map(Number)
-    .filter((m) => streak >= m)
+  const milestones = Object.keys(STREAK_MESSAGES).map(Number).filter((m) => streak >= m)
   if (milestones.length === 0) return `Day ${streak}! Keep going! 🌱`
   const closest = Math.max(...milestones)
   return STREAK_MESSAGES[closest]
@@ -36,8 +35,17 @@ function getDailyComeback() {
 }
 
 export default function StreakDisplay({ streak, isNewDay, position }) {
+  const { isDark } = useThemeContext()
   const [showTop, setShowTop] = useState(isNewDay)
   const [showBottom, setShowBottom] = useState(!isNewDay)
+
+  const accent = isDark ? "text-purple-300" : "text-sky-300"
+  const muted = isDark ? "text-purple-400/60" : "text-sky-400/60"
+  const faint = isDark ? "text-purple-400/40" : "text-sky-400/40"
+  const divider = isDark ? "bg-purple-800/20" : "bg-sky-500/20"
+  const barGradient = isDark
+    ? "from-purple-500 to-pink-500"
+    : "from-sky-400 to-cyan-400"
 
   useEffect(() => {
     if (isNewDay) {
@@ -67,14 +75,14 @@ export default function StreakDisplay({ streak, isNewDay, position }) {
             >
               ❤️‍🔥
             </motion.div>
-            <p className="text-base font-bold text-purple-300">
+            <p className={`text-base font-bold ${accent}`}>
               Day {streak} Streak!
             </p>
-            <p className="text-xs text-purple-400/60 text-center">
+            <p className={`text-xs text-center ${muted}`}>
               {getStreakMessage(streak)}
             </p>
             <motion.div
-              className="mt-2 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+              className={`mt-2 h-0.5 bg-gradient-to-r ${barGradient} rounded-full`}
               initial={{ width: "120px" }}
               animate={{ width: "0px" }}
               transition={{ duration: 5, ease: "linear" }}
@@ -94,17 +102,17 @@ export default function StreakDisplay({ streak, isNewDay, position }) {
           transition={{ duration: 0.5 }}
           className="mt-6 flex flex-col items-center gap-2 w-full max-w-xl"
         >
-          <div className="w-full h-px bg-purple-800/20 mb-1" />
+          <div className={`w-full h-px ${divider} mb-1`} />
           <div className="flex items-center gap-2">
             <span className="text-lg">❤️‍🔥</span>
-            <span className="text-sm font-semibold text-purple-300">
+            <span className={`text-sm font-semibold ${accent}`}>
               Day {streak}
             </span>
-            <span className="text-xs text-purple-400/60">
+            <span className={`text-xs ${muted}`}>
               — {getStreakMessage(streak)}
             </span>
           </div>
-          <p className="text-xs text-purple-400/40 text-center italic mt-1">
+          <p className={`text-xs text-center italic mt-1 ${faint}`}>
             {getDailyComeback()}
           </p>
         </motion.div>
