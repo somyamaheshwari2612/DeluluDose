@@ -37,7 +37,9 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         margin: "0 0 20px 0",
         flexShrink: 0,
       }}>
-        {affirmation.category}
+        {affirmation.category === "ai-crafted"
+            ? "A DeluluDose Original  ✦"
+            : affirmation.category}
       </p>
 
       {/* Quote — solid white, no gradient */}

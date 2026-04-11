@@ -1,3 +1,4 @@
+import AIDoseGenerator from "./components/AIDoseGenerator"
 import MoodReactions from "./components/MoodReactions"
 import { useMoods } from "./hooks/useMoods"
 import { Analytics } from "@vercel/analytics/react"
@@ -113,6 +114,25 @@ function FlippingName() {
 }
 
 export default function App() {
+  function handleAIShare(text) {
+  const url = window.location.href
+  if (navigator.share) {
+    navigator.share({ text: `✨ ${text}\n\n— DeluluDose`, url })
+      .catch(() => {})
+  } else {
+    const encoded = encodeURIComponent(`✨ ${text}\n\n— DeluluDose\n${url}`)
+    window.open(`https://wa.me/?text=${encoded}`, "_blank")
+  }
+}
+
+async function handleAISaveImage(text) {
+  // Temporarily swap current for AI quote, capture, then restore
+  const original = current
+  setCurrent({ ...current, text, category: "ai-crafted" })
+  await new Promise((r) => setTimeout(r, 100))
+  await handleSaveImage()
+  setCurrent(original)
+}
   // Load persisted deck on mount
   const { deck: initialDeck, pointer: initialPointer } = loadDeck()
 
@@ -254,7 +274,10 @@ export default function App() {
         isFavorite={isFavorite(current.id)}
         onToggleFavorite={toggleFavorite}
       />
-
+    <AIDoseGenerator
+      onShare={handleAIShare}
+      onSaveImage={handleAISaveImage}
+      />
       <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
 
       <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
