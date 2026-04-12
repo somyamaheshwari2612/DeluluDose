@@ -17,16 +17,6 @@ import { ThemeContext } from "./contexts/ThemeContext"
 import { useTheme } from "./hooks/useTheme"
 import ThemeToggle from "./components/ThemeToggle"
 
-const floatingIcons = [
-  { icon: "⭐", x: "5%",  top: "8%",  delay: 0 },
-  { icon: "🌙", x: "88%", top: "12%", delay: 0.4 },
-  { icon: "💫", x: "8%",  top: "35%", delay: 0.8 },
-  { icon: "⚡", x: "85%", top: "40%", delay: 0.2 },
-  { icon: "🔮", x: "6%",  top: "65%", delay: 1 },
-  { icon: "💛",  x: "87%", top: "70%", delay: 0.6 },
-  { icon: "✨", x: "45%", top: "92%", delay: 1.2 },
-]
-
 const RETURNING_MESSAGES = [
   "You were here last time. Ready to go deeper? ✦",
   "Welcome back. Time to explore beyond this. 💙",
@@ -231,33 +221,41 @@ export default function App() {
 
         <ThemeToggle onToggle={toggleTheme} />
 
-        {/* Floating icons with z-0 */}
-        {floatingIcons.map(({ icon, x, top, delay }, i) => (
-          <motion.span
-            key={i}
-            className="absolute text-xl select-none pointer-events-none opacity-30 z-0"
-            style={{ left: x, top: top }}
-            animate={{ y: [0, -18, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay }}
-          >
-            {icon}
-          </motion.span>
-        ))}
-
         {/* Main Content Container with z-10 */}
         <div className="relative z-10 flex flex-col items-center w-full">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className={`text-5xl font-black tracking-tight bg-clip-text text-transparent mb-2 bg-gradient-to-r ${
-              isDark
-                ? "from-purple-400 via-fuchsia-400 to-pink-400"
-                : "from-sky-400 via-cyan-300 to-blue-400"
-            }`}
-          >
-            DeluluDose
-          </motion.h1>
+          
+          {/* Title with floating icons around it */}
+          <div className="relative flex items-center justify-center w-full mb-2">
+            {/* Left icons */}
+            <motion.span className="absolute left-[8%] text-xl opacity-30 select-none pointer-events-none"
+              animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, delay: 0 }}>⭐</motion.span>
+            <motion.span className="absolute left-[15%] text-xl opacity-30 select-none pointer-events-none"
+              animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, delay: 0.8 }}>💫</motion.span>
+            <motion.span className="absolute left-[3%] text-xl opacity-30 select-none pointer-events-none"
+              animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, delay: 1 }}>🔮</motion.span>
+
+            {/* Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className={`text-5xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
+                isDark
+                  ? "from-purple-400 via-fuchsia-400 to-pink-400"
+                  : "from-sky-400 via-cyan-300 to-blue-400"
+              }`}
+            >
+              DeluluDose
+            </motion.h1>
+
+            {/* Right icons */}
+            <motion.span className="absolute right-[8%] text-xl opacity-30 select-none pointer-events-none"
+              animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, delay: 0.4 }}>🌙</motion.span>
+            <motion.span className="absolute right-[15%] text-xl opacity-30 select-none pointer-events-none"
+              animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, delay: 0.2 }}>⚡</motion.span>
+            <motion.span className="absolute right-[3%] text-xl opacity-30 select-none pointer-events-none"
+              animate={{ y: [0, -10, 0] }} transition={{ duration: 3, repeat: Infinity, delay: 0.6 }}>✨</motion.span>
+          </div>
 
           <motion.p
             initial={{ opacity: 0 }}
