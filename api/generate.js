@@ -66,14 +66,37 @@ Tone guide:
 - Brutally Honest: truthful, but not inappropriate for the situation
 - Dreamy & Poetic: soft, aesthetic, emotionally accurate
 
+Gen Z voice layer:
+- Keep tone modern, relatable, and slightly conversational
+- Do NOT use all lowercase styling
+- Do NOT sacrifice grammar or clarity for trendiness
+- Keep it natural, not try-hard or slang-heavy
+
+
+Examples of acceptable tone:
+- “you’re not behind, you’re just early in your own timeline”
+- “be serious, you’ve handled worse”
+- “this version of you? kinda powerful”
+- “rest, then come back stronger”
+
+Avoid:
+- Overused internet phrases (e.g., no cap, fr fr, slay queen)
+- Trying too hard to sound trendy
+- Breaking emotional tone for the sake of slang
+
+
 Language rules (CRITICAL):
 - The sentence must be grammatically correct and natural
 - It must read like something a real person would say
 - Avoid awkward phring or forced keyword placement
 - Do not just combine keywords; form a meaningful sentence
 - If keywords don’t fit naturally, rephrase them into a natural expression
-- Prefer clarity over cleverness
+- Prefer clarity, with a touch of personality
 
+Formatting rules (CRITICAL):
+- Use standard sentence case: only the first word capitalized, rest lowercase (unless proper nouns)
+- Do NOT use all lowercase or all uppercase sentences
+- Each sentence must end with a proper punctuation mark (., !, or ?)
 
 Creative rules:
 - 1–2 lines maximum
@@ -100,6 +123,8 @@ STRICT RULES:
 1. your first one-liner here
 2. your second one-liner here
 3. your third one-liner here
+- If formatting rules are violated, rewrite before responding
+
 Output:
 Return only the affirmation text. No labels, no explanations.
 `

@@ -44,7 +44,7 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         flexShrink: 0,
       }}>
         {affirmation.category === "ai-crafted"
-          ? "A D e l u l u D o s e  O r i g i n a l  ✦"
+          ? "A DeluluDose Original ✦"
           : affirmation.category}
       </p>
 
@@ -80,7 +80,7 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         margin: "0",
         flexShrink: 0,
       }}>
-        DeluluDose ✦ by SM 💙
+        {`DeluluDose ✦ by SM ${isDark ? "💜" : "💙"}`}
       </p>
     </div>
   )
