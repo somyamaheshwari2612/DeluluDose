@@ -18,13 +18,13 @@ import { useTheme } from "./hooks/useTheme"
 import ThemeToggle from "./components/ThemeToggle"
 
 const floatingIcons = [
-  { icon: "⭐", x: "10%", delay: 0 },
-  { icon: "🌙", x: "80%", delay: 0.4 },
-  { icon: "💫", x: "25%", delay: 0.8 },
-  { icon: "⚡", x: "65%", delay: 0.2 },
-  { icon: "🔮", x: "90%", delay: 1 },
-  { icon: "✦",  x: "45%", delay: 0.6 },
-  { icon: "✨", x: "50%", delay: 1.2 },
+  { icon: "⭐", x: "5%",  top: "8%",  delay: 0 },
+  { icon: "🌙", x: "88%", top: "12%", delay: 0.4 },
+  { icon: "💫", x: "8%",  top: "35%", delay: 0.8 },
+  { icon: "⚡", x: "85%", top: "40%", delay: 0.2 },
+  { icon: "🔮", x: "6%",  top: "65%", delay: 1 },
+  { icon: "💛",  x: "87%", top: "70%", delay: 0.6 },
+  { icon: "✨", x: "45%", top: "92%", delay: 1.2 },
 ]
 
 const RETURNING_MESSAGES = [
@@ -232,11 +232,11 @@ export default function App() {
         <ThemeToggle onToggle={toggleTheme} />
 
         {/* Floating icons with z-0 */}
-        {floatingIcons.map(({ icon, x, delay }, i) => (
+        {floatingIcons.map(({ icon, x, top, delay }, i) => (
           <motion.span
             key={i}
             className="absolute text-xl select-none pointer-events-none opacity-30 z-0"
-            style={{ left: x, top: "10%" }}
+            style={{ left: x, top: top }}
             animate={{ y: [0, -18, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay }}
           >
