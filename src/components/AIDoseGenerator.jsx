@@ -14,7 +14,7 @@ const MOODS = [
 const BUTTON_LABELS = [
   "✨ Craft my dose",
   "🔮 Brew something for me",
-  "💙 Make it personal",
+  "💫 Make it personal",
   "⚡ Generate my vibe",
   "🫠 I need this now",
 ]
@@ -28,13 +28,13 @@ const RATING_OPTIONS = [
 const TRIGGER_LABELS = [
   "✨ Generate Your Dose with AI",
   "🔮 Craft a personal affirmation",
-  "💙 Make it about you",
+  "💫 Make it about you",
   "⚡ AI knows what you need",
   "🫠 Get a custom dose",
 ]
 
 const RATING_RESPONSES = {
-  "😐": "Noted. We'll do better next time. 💙",
+  "😐": "Noted. We'll do better next time. 💫",
   "🙂": "Glad it landed! Keep dosing. ✨",
   "😍": "Obsessed? Same. You manifested this. 🔮",
 }

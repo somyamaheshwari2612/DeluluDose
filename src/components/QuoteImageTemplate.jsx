@@ -14,7 +14,7 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         height: "600px",
         background: isDark
           ? "linear-gradient(135deg, #0d0a14 0%, #1a1025 50%, #0d0a14 100%)"
-          : "linear-gradient(135deg, #f0f7ff 0%, #e0f0ff 50%, #f0f7ff 100%)",
+          : "linear-gradient(135deg, #060e1f 0%, #0a1628 50%, #060e1f 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -53,7 +53,7 @@ const QuoteImageTemplate = ({ affirmation, templateRef }) => {
         fontWeight: "700",
         textAlign: "center",
         lineHeight: "1.6",
-        color: isDark ? "#f3e8ff" : "#1e3a5f",
+        color: isDark ? "#f3e8ff" : "#e0f7ff",
         margin: "0 0 32px 0",
         wordBreak: "break-word",
         overflowWrap: "break-word",

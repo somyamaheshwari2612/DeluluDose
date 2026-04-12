@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useThemeContext } from "../contexts/ThemeContext"
 
 const MOODS = [
   { emoji: "😁", label: "joyful" },
@@ -29,6 +30,7 @@ const CAPTIONS = [
 ]
 
 export default function MoodReactions({ onMoodSelect, recentMoods }) {
+  const { isDark } = useThemeContext()
   const [selected, setSelected] = useState(null)
   const [feedback, setFeedback] = useState("")
   const [captionIndex, setCaptionIndex] = useState(0)
@@ -68,7 +70,9 @@ export default function MoodReactions({ onMoodSelect, recentMoods }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.3 }}
-            className="text-xs text-purple-400/50 tracking-widest uppercase"
+           className={`text-xs text-center tracking-widest uppercase ${
+                isDark ? "text-purple-400/50" : "text-sky-400/50"
+              }`}
           >
             {CAPTIONS[captionIndex]}
           </motion.p>
@@ -120,7 +124,9 @@ export default function MoodReactions({ onMoodSelect, recentMoods }) {
             exit={{ opacity: 0 }}
             className="flex items-center gap-2 mt-1"
           >
-            <span className="text-xs text-purple-400/40 tracking-widest uppercase">
+            <span className={`text-xs tracking-widest uppercase ${
+                isDark ? "text-purple-400/40" : "text-sky-400/40"
+              }`}>
               recent vibes
             </span>
             <div className="flex gap-1">

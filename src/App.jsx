@@ -137,7 +137,7 @@ export default function App() {
       const t = setTimeout(() => setShowReturningMsg(false), 4000)
       return () => clearTimeout(t)
     }
-  }, [])
+  }, [showReturningMsg])
 
   const handleNewAffirmation = useCallback(() => {
     if (isLoading) return
@@ -231,10 +231,11 @@ export default function App() {
 
         <ThemeToggle onToggle={toggleTheme} />
 
+        {/* Floating icons with z-0 */}
         {floatingIcons.map(({ icon, x, delay }, i) => (
           <motion.span
             key={i}
-            className="absolute text-xl select-none pointer-events-none opacity-30"
+            className="absolute text-xl select-none pointer-events-none opacity-30 z-0"
             style={{ left: x, top: "10%" }}
             animate={{ y: [0, -18, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay }}
@@ -243,111 +244,115 @@ export default function App() {
           </motion.span>
         ))}
 
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className={`text-5xl font-black tracking-tight bg-clip-text text-transparent mb-2 bg-gradient-to-r ${
-            isDark
-              ? "from-purple-400 via-fuchsia-400 to-pink-400"
-              : "from-sky-400 via-cyan-300 to-blue-400"
-          }`}
-        >
-          DeluluDose
-        </motion.h1>
+        {/* Main Content Container with z-10 */}
+        <div className="relative z-10 flex flex-col items-center w-full">
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className={`text-5xl font-black tracking-tight bg-clip-text text-transparent mb-2 bg-gradient-to-r ${
+              isDark
+                ? "from-purple-400 via-fuchsia-400 to-pink-400"
+                : "from-sky-400 via-cyan-300 to-blue-400"
+            }`}
+          >
+            DeluluDose
+          </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className={`text-sm mb-4 tracking-widest uppercase ${
-            isDark ? "text-purple-400/60" : "text-sky-300/70"
-          }`}
-        >
-          your daily reality check ✦
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className={`text-sm mb-4 tracking-widest uppercase ${
+              isDark ? "text-purple-400/60" : "text-sky-300/70"
+            }`}
+          >
+            your daily reality check ✦
+          </motion.p>
 
-        <StreakDisplay streak={streak} isNewDay={isNewDay} position="top" />
+          <StreakDisplay streak={streak} isNewDay={isNewDay} position="top" />
 
-        <AnimatePresence>
-          {showReturningMsg && (
-            <motion.p
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.4 }}
-              className={`text-xs tracking-wide italic mb-6 text-center ${
-                isDark ? "text-purple-400/50" : "text-sky-300/50"
-              }`}
+          <AnimatePresence>
+            {showReturningMsg && (
+              <motion.p
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.4 }}
+                className={`text-xs tracking-wide italic mb-6 text-center ${
+                  isDark ? "text-purple-400/50" : "text-sky-300/50"
+                }`}
+              >
+                {getDailyReturningMessage()}
+              </motion.p>
+            )}
+          </AnimatePresence>
+
+          {!showReturningMsg && <div className="mb-6" />}
+
+          <AffirmationCard
+            affirmation={current}
+            isFavorite={isFavorite(current.id)}
+            onToggleFavorite={toggleFavorite}
+          />
+
+          <AIDoseGenerator
+            onShare={handleAIShare}
+            onSaveImage={handleAISaveImage}
+          />
+
+          <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
+
+          <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
+
+          <div className="mt-4 flex items-center gap-5">
+            <motion.button
+              onClick={handleShareLink}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`text-sm transition-colors cursor-pointer flex items-center gap-1.5 ${actionColor}`}
             >
-              {getDailyReturningMessage()}
-            </motion.p>
-          )}
-        </AnimatePresence>
+              🔗 Share
+            </motion.button>
+            <span className={dividerColor}>|</span>
+            <motion.button
+              onClick={handleCopy}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`text-sm transition-colors cursor-pointer ${actionColor}`}
+            >
+              {copied ? "✅ Copied!" : "📋 Copy"}
+            </motion.button>
+            <span className={dividerColor}>|</span>
+            <motion.button
+              onClick={handleSaveImage}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`text-sm transition-colors cursor-pointer flex items-center gap-1.5 ${actionColor}`}
+            >
+              🖼️ Save image
+            </motion.button>
+          </div>
 
-        {!showReturningMsg && <div className="mb-6" />}
+          <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
 
-        <AffirmationCard
-          affirmation={current}
-          isFavorite={isFavorite(current.id)}
-          onToggleFavorite={toggleFavorite}
-        />
+          <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
 
-        <AIDoseGenerator
-          onShare={handleAIShare}
-          onSaveImage={handleAISaveImage}
-        />
+          <StreakDisplay streak={streak} isNewDay={isNewDay} position="bottom" />
 
-        <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
-
-        <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
-
-        <div className="mt-4 flex items-center gap-5">
-          <motion.button
-            onClick={handleShareLink}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`text-sm transition-colors cursor-pointer flex items-center gap-1.5 ${actionColor}`}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className={`mt-16 text-xs tracking-wide text-center ${
+              isDark ? "text-purple-400/40" : "text-sky-400/40"
+            }`}
           >
-            🔗 Share
-          </motion.button>
-          <span className={dividerColor}>|</span>
-          <motion.button
-            onClick={handleCopy}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`text-sm transition-colors cursor-pointer ${actionColor}`}
-          >
-            {copied ? "✅ Copied!" : "📋 Copy"}
-          </motion.button>
-          <span className={dividerColor}>|</span>
-          <motion.button
-            onClick={handleSaveImage}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`text-sm transition-colors cursor-pointer flex items-center gap-1.5 ${actionColor}`}
-          >
-            🖼️ Save image
-          </motion.button>
+            Made with Delusion & Determination by{" "}
+            <FlippingName isDark={isDark} />
+          </motion.p>
         </div>
 
-        <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
-
-        <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
-
-        <StreakDisplay streak={streak} isNewDay={isNewDay} position="bottom" />
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className={`mt-16 text-xs tracking-wide text-center ${
-            isDark ? "text-purple-400/40" : "text-sky-400/40"
-          }`}
-        >
-          Made with Delusion & Determination by{" "}
-          <FlippingName isDark={isDark} />
-        </motion.p>
         <Analytics />
       </div>
     </ThemeContext.Provider>
