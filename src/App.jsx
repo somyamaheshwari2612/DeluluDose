@@ -298,10 +298,7 @@ export default function App() {
 
           <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
 
-          <AIDoseGenerator
-            onShare={handleAIShare}
-            onSaveImage={handleAISaveImage}
-          />
+          
 
           <div className="mt-4 flex items-center gap-5">
             <motion.button
@@ -331,6 +328,10 @@ export default function App() {
               🖼️ Save image
             </motion.button>
           </div>
+          <AIDoseGenerator
+            onShare={handleAIShare}
+            onSaveImage={handleAISaveImage}
+          />
 
           <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
 
