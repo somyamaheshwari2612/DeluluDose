@@ -294,14 +294,14 @@ export default function App() {
             onToggleFavorite={toggleFavorite}
           />
 
+          <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
+
+          <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
+
           <AIDoseGenerator
             onShare={handleAIShare}
             onSaveImage={handleAISaveImage}
           />
-
-          <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
-
-          <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
 
           <div className="mt-4 flex items-center gap-5">
             <motion.button
