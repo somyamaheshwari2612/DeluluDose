@@ -293,14 +293,10 @@ export default function App() {
             isFavorite={isFavorite(current.id)}
             onToggleFavorite={toggleFavorite}
           />
-
+          <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
           <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
 
-          <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
-
-          
-
-          <div className="mt-4 flex items-center gap-5">
+           <div className="mt-4 flex items-center gap-5">
             <motion.button
               onClick={handleShareLink}
               whileHover={{ scale: 1.05 }}
@@ -332,6 +328,10 @@ export default function App() {
             onShare={handleAIShare}
             onSaveImage={handleAISaveImage}
           />
+
+          
+
+      
 
           <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
 
