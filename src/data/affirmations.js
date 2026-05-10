@@ -198,7 +198,147 @@ const affirmations = [
   { id: 197, text: "Some days you bloom. Some days you just breathe. Both count.", category: "healing" },
   { id: 198, text: "You’re allowed to take your time becoming okay again.", category: "healing" },
   { id: 199, text: "You didn’t imagine the pain. But you’re also not stuck in it forever.", category: "healing" },
-  { id: 200, text: "You’re learning that peace doesn’t always come from answers, but from acceptance.", category: "healing" }
+  { id: 200, text: "You’re learning that peace doesn’t always come from answers, but from acceptance.", category: "healing" },
+  // DREAMY CATEGORY
+  { id: 201, text: "Maybe your life isn’t falling apart. Maybe it’s just changing scenes.", category: "dreamy" },
+  { id: 202, text: "You were not made for a small life or fluorescent lighting.", category: "dreamy" },
+  { id: 203, text: "Somewhere between healing and becoming, you found yourself.", category: "dreamy" },
+  { id: 204, text: "You have the kind of soul people write songs about.", category: "dreamy" },
+  { id: 205, text: "The universe keeps leaving little doors unlocked for you.", category: "dreamy" },
+  { id: 206, text: "You romanticize life because deep down, you know it’s sacred.", category: "dreamy" },
+  { id: 207, text: "You were always meant to become someone unforgettable.", category: "dreamy" },
+  { id: 208, text: "Even the moon disappears sometimes. It still comes back glowing.", category: "dreamy" },
+  { id: 209, text: "Your future is already missing you.", category: "dreamy" },
+  { id: 210, text: "There’s a version of you out there already living your dream life. Catch up.", category: "dreamy" },
+
+  // VILLAIN CATEGORY
+  { id: 211, text: "Becoming harder to manipulate is character development.", category: "villain" },
+  { id: 212, text: "You survived things that were supposed to destroy you. That changes a person.", category: "villain" },
+  { id: 213, text: "Not everyone deserves access to you anymore.", category: "villain" },
+  { id: 214, text: "Your silence scares people more than your anger ever did.", category: "villain" },
+  { id: 215, text: "You learned the lesson. Now raise the standard.", category: "villain" },
+  { id: 216, text: "They wanted you doubtful. Awkward for them.", category: "villain" },
+  { id: 217, text: "You can be kind without being easy to break.", category: "villain" },
+  { id: 218, text: "You stopped shrinking. Suddenly everyone got uncomfortable.", category: "villain" },
+
+  // COZY CATEGORY
+  { id: 219, text: "A soft life is still a meaningful life.", category: "cozy" },
+  { id: 220, text: "You deserve mornings that don’t feel like survival.", category: "cozy" },
+  { id: 221, text: "Maybe healing looks like laughing louder again.", category: "cozy" },
+  { id: 222, text: "You are allowed to enjoy small beautiful things without guilt.", category: "cozy" },
+  { id: 223, text: "Your nervous system deserves kindness too.", category: "cozy" },
+  { id: 224, text: "Resting is not falling behind. It’s being human.", category: "cozy" },
+
+  // DIGITAL CATEGORY
+  { id: 225, text: "Your brain has 47 tabs open and somehow you’re still functioning.", category: "digital" },
+  { id: 226, text: "Stop buffering your life waiting for perfect conditions.", category: "digital" },
+  { id: 227, text: "Your personality is just organized chaos with good Wi-Fi.", category: "digital" },
+  { id: 228, text: "You are not low battery. You’re just running too many background apps.", category: "digital" },
+  { id: 229, text: "The algorithm could never predict someone like you.", category: "digital" },
+
+  // ABSURDIST CATEGORY
+  { id: 230, text: "None of us know what’s happening. Some people are just louder about it.", category: "absurdist" },
+  { id: 231, text: "You’re a tiny creature on a floating rock. Have the iced coffee.", category: "absurdist" },
+  { id: 232, text: "Life is weird. You might as well become iconic about it.", category: "absurdist" },
+  { id: 233, text: "The horrors persist, but so do your playlists.", category: "absurdist" },
+  { id: 234, text: "Existence is confusing, but your outfit is incredible.", category: "absurdist" },
+
+  // MIDNIGHT CATEGORY
+  { id: 235, text: "Some truths only make sense after midnight.", category: "midnight" },
+  { id: 236, text: "You’ve changed quietly. That still counts.", category: "midnight" },
+  { id: 237, text: "You miss old versions of yourself because they carried you here.", category: "midnight" },
+  { id: 238, text: "Not every lonely feeling means you’re alone.", category: "midnight" },
+  { id: 239, text: "You are becoming someone your younger self would stare at in awe.", category: "midnight" },
+
+  // FERAL CATEGORY
+  { id: 240, text: "Go ahead. Be a little unhinged about your dreams.", category: "feral" },
+  { id: 241, text: "You were not born to act normal in spreadsheets and silence.", category: "feral" },
+  { id: 242, text: "Your instincts are smarter than half your overthinking.", category: "feral" },
+  { id: 243, text: "Become impossible to ignore.", category: "feral" },
+  { id: 244, text: "You’ve got raccoon energy and somehow it’s working.", category: "feral" },
+  // COSMIC CATEGORY
+  { id: 245, text: "The stars survived exploding. You can survive this week.", category: "cosmic" },
+  { id: 246, text: "Some things are written in effort, not fate.", category: "cosmic" },
+  { id: 247, text: "You are made of stardust and unfinished stories.", category: "cosmic" },
+  { id: 248, text: "The universe didn’t make you this strange by accident.", category: "cosmic" },
+  { id: 249, text: "Your timing might feel late to you and perfect to the universe.", category: "cosmic" },
+  { id: 250, text: "Even galaxies drift before they find alignment.", category: "cosmic" },
+  { id: 251, text: "You are not lost. You are orbiting something new.", category: "cosmic" },
+  { id: 252, text: "The universe has a habit of rewarding people who keep going.", category: "cosmic" },
+  { id: 253, text: "Some endings are just celestial rerouting.", category: "cosmic" },
+  { id: 254, text: "You carry entire constellations worth of potential.", category: "cosmic" },
+
+  // CHAOS-ROMANTIC CATEGORY
+  { id: 255, text: "Fall in love with your life before anyone else.", category: "chaos-romantic" },
+  { id: 256, text: "You were made for impulsive road trips and dramatic eye contact.", category: "chaos-romantic" },
+  { id: 257, text: "Maybe healing looks like dancing badly in your room again.", category: "chaos-romantic" },
+  { id: 258, text: "Text them? Maybe. Write poetry about it? Absolutely.", category: "chaos-romantic" },
+  { id: 259, text: "You crave a life that feels like a movie because deep down, you know it should.", category: "chaos-romantic" },
+  { id: 260, text: "You’re allowed to want soft love and a reckless adventure.", category: "chaos-romantic" },
+  { id: 261, text: "Your heart keeps choosing you despite everything. That’s brave.", category: "chaos-romantic" },
+  { id: 262, text: "Be the kind of person songs are written about.", category: "chaos-romantic" },
+  { id: 263, text: "You romanticize everything because you refuse to live numb.", category: "chaos-romantic" },
+  { id: 264, text: "You deserve a love story that feels alive, not just convenient.", category: "chaos-romantic" },
+
+  // POETIC CATEGORY
+  { id: 265, text: "You have survived every version of the sky so far.", category: "poetic" },
+  { id: 266, text: "Some souls bloom softly, like midnight flowers.", category: "poetic" },
+  { id: 267, text: "There is tenderness in the way you keep trying.", category: "poetic" },
+  { id: 268, text: "You carry spring inside you, even after harsh winters.", category: "poetic" },
+  { id: 269, text: "Not all growth is loud enough to hear.", category: "poetic" },
+  { id: 270, text: "You are becoming fluent in your own heart.", category: "poetic" },
+  { id: 271, text: "The light reaches you eventually. It always does.", category: "poetic" },
+  { id: 272, text: "Somewhere along the way, you became softer and stronger at once.", category: "poetic" },
+  { id: 273, text: "You were never meant to stay the same forever.", category: "poetic" },
+  { id: 274, text: "Even now, your story is unfolding beautifully.", category: "poetic" },
+
+  // RECOVERY CATEGORY
+  { id: 275, text: "Burnout recovery is still progress, even when it looks like resting.", category: "recovery" },
+  { id: 276, text: "You are relearning how to exist without survival mode.", category: "recovery" },
+  { id: 277, text: "Your worth did not disappear when your energy did.", category: "recovery" },
+  { id: 278, text: "Resting before you collapse is growth too.", category: "recovery" },
+  { id: 279, text: "You’re allowed to recover from things nobody noticed hurt you.", category: "recovery" },
+  { id: 280, text: "Healing your nervous system is productive.", category: "recovery" },
+  { id: 281, text: "You do not need to earn rest by suffering first.", category: "recovery" },
+  { id: 282, text: "Being exhausted all the time was never your personality.", category: "recovery" },
+  { id: 283, text: "You are slowly becoming someone who feels safe to yourself.", category: "recovery" },
+  { id: 284, text: "Recovery is messy because humans are not machines.", category: "recovery" },
+
+  // REBEL CATEGORY
+  { id: 285, text: "You were not born just to be manageable.", category: "rebel" },
+  { id: 286, text: "Outgrowing expectations is a form of freedom.", category: "rebel" },
+  { id: 287, text: "You don’t owe tradition your unhappiness.", category: "rebel" },
+  { id: 288, text: "Becoming yourself will disappoint people committed to your silence.", category: "rebel" },
+  { id: 289, text: "You’re allowed to choose a life that makes sense to you.", category: "rebel" },
+  { id: 290, text: "The right path is not always the obedient one.", category: "rebel" },
+  { id: 291, text: "You can respect people and still refuse to shrink for them.", category: "rebel" },
+  { id: 292, text: "Normal was never going to satisfy you anyway.", category: "rebel" },
+  { id: 293, text: "Some rules deserve questioning.", category: "rebel" },
+  { id: 294, text: "You were built to create your own blueprint.", category: "rebel" },
+
+  // SELF-LOVE CATEGORY
+  { id: 295, text: "You deserve your own patience too.", category: "self-love" },
+  { id: 296, text: "Liking yourself changes everything quietly.", category: "self-love" },
+  { id: 297, text: "You are allowed to become someone you genuinely enjoy being.", category: "self-love" },
+  { id: 298, text: "Talk to yourself like you’re someone worth protecting.", category: "self-love" },
+  { id: 299, text: "You are not difficult to love. You are just deeply human.", category: "self-love" },
+  { id: 300, text: "Your relationship with yourself sets the tone for your entire life.", category: "self-love" },
+  { id: 301, text: "You deserve kindness from yourself, not just others.", category: "self-love" },
+  { id: 302, text: "Becoming softer with yourself is a radical thing.", category: "self-love" },
+  { id: 303, text: "You are allowed to take care of yourself without guilt.", category: "self-love" },
+  { id: 304, text: "You’ve spent enough time at war with yourself.", category: "self-love" },
+
+  // TINY-WIN CATEGORY
+  { id: 305, text: "You answered the email. Tiny win. We celebrate those here.", category: "tiny-win" },
+  { id: 306, text: "Getting out of bed counted more than you think today.", category: "tiny-win" },
+  { id: 307, text: "A little progress is still progress. Gold star behavior.", category: "tiny-win" },
+  { id: 308, text: "You did the thing you were avoiding. Suspiciously powerful of you.", category: "tiny-win" },
+  { id: 309, text: "Tiny wins become entire new lives eventually.", category: "tiny-win" },
+  { id: 310, text: "You remembered to take care of yourself today. That matters.", category: "tiny-win" },
+  { id: 311, text: "One completed task is still momentum.", category: "tiny-win" },
+  { id: 312, text: "You’re building trust with yourself, one tiny promise at a time.", category: "tiny-win" },
+  { id: 313, text: "Some days success looks like replying, showering, and surviving.", category: "tiny-win" },
+  { id: 314, text: "You showed up today. That’s not nothing.", category: "tiny-win" }
 ]
 
 
