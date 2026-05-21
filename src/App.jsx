@@ -17,6 +17,7 @@ import { ThemeContext } from "./contexts/ThemeContext"
 import { useTheme } from "./hooks/useTheme"
 import ThemeToggle from "./components/ThemeToggle"
 import QuoteOfTheDay from "./components/QuoteOfTheDay"
+import MoodCalendar from "./components/MoodCalendar"
 
 const RETURNING_MESSAGES = [
   "You were here last time. Ready to go deeper? ✦",
@@ -71,9 +72,9 @@ function buildInitialDeck() {
 }
 
 function loadDeck(categories) {
-  const source = categories.length === 0
-    ? affirmations
-    : affirmations.filter(a => categories.includes(a.category))
+  const isAll = categories.length === 0 || categories.length === allCategories.length
+  const source = isAll ? affirmations : affirmations.filter(a => categories.includes(a.category))
+
   try {
     const saved = localStorage.getItem("deluludose-deck")
     const pointer = parseInt(localStorage.getItem("deluludose-pointer") || "0")
@@ -82,9 +83,9 @@ function loadDeck(categories) {
       if (deck.length === source.length) return { deck, pointer }
     }
   } catch {}
-  const deck = categories.length === 0
-    ? buildInitialDeck()
-    : shuffle(source)
+
+  // Only buildInitialDeck when showing all — preserves first-visit fixed quote
+  const deck = isAll ? buildInitialDeck() : shuffle(source)
   return { deck, pointer: 0 }
 }
 
@@ -149,7 +150,7 @@ export default function App() {
   const [copied, setCopied] = useState(false)
 
   const { favorites, toggleFavorite, isFavorite } = useFavorites()
-  const { recentMoods, addMood } = useMoods()
+  const { recentMoods, addMood, moodHistory } = useMoods()
   const { streak, isNewDay } = useStreak()
 
   useEffect(() => {
@@ -453,7 +454,7 @@ export default function App() {
           <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
 
           <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
-
+          <MoodCalendar moodHistory={moodHistory} />
           <StreakDisplay streak={streak} isNewDay={isNewDay} position="bottom" />
 
           <motion.p
