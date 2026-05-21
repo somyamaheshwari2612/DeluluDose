@@ -16,6 +16,7 @@ import { useStreak } from "./hooks/useStreak"
 import { ThemeContext } from "./contexts/ThemeContext"
 import { useTheme } from "./hooks/useTheme"
 import ThemeToggle from "./components/ThemeToggle"
+import QuoteOfTheDay from "./components/QuoteOfTheDay"
 
 const RETURNING_MESSAGES = [
   "You were here last time. Ready to go deeper? ✦",
@@ -40,6 +41,26 @@ function shuffle(arr) {
   return a
 }
 
+// Derived from affirmations — auto-updates if new categories added later
+const allCategories = [...new Set(affirmations.map(a => a.category))]
+
+function getSavedCategories() {
+  try {
+    // Migration key — wipes old format data once
+    if (!localStorage.getItem("deluludose-cat-v2")) {
+      localStorage.removeItem("deluludose-categories")
+      localStorage.setItem("deluludose-cat-v2", "true")
+    }
+    const saved = localStorage.getItem("deluludose-categories")
+    if (saved) {
+      const parsed = JSON.parse(saved)
+      const valid = parsed.filter(c => allCategories.includes(c))
+      if (valid.length > 0) return valid
+    }
+  } catch {}
+  return [...allCategories] // default: all included
+}
+
 function buildInitialDeck() {
   const isFirstEver = !localStorage.getItem("deluludose-visited")
   if (isFirstEver) {
@@ -49,16 +70,21 @@ function buildInitialDeck() {
   return shuffle(affirmations)
 }
 
-function loadDeck() {
+function loadDeck(categories) {
+  const source = categories.length === 0
+    ? affirmations
+    : affirmations.filter(a => categories.includes(a.category))
   try {
     const saved = localStorage.getItem("deluludose-deck")
     const pointer = parseInt(localStorage.getItem("deluludose-pointer") || "0")
     if (saved) {
       const deck = JSON.parse(saved)
-      if (deck.length === affirmations.length) return { deck, pointer }
+      if (deck.length === source.length) return { deck, pointer }
     }
   } catch {}
-  const deck = buildInitialDeck()
+  const deck = categories.length === 0
+    ? buildInitialDeck()
+    : shuffle(source)
   return { deck, pointer: 0 }
 }
 
@@ -106,8 +132,12 @@ function FlippingName({ isDark }) {
 
 export default function App() {
   const { isDark, toggleTheme } = useTheme()
+  const savedCategories = getSavedCategories()
+  const [selectedCategories, setSelectedCategories] = useState(savedCategories)
+  const [isFilteredDeckExhausted, setIsFilteredDeckExhausted] = useState(false)
+  const isFiltered = selectedCategories.length < allCategories.length
 
-  const { deck: initialDeck, pointer: initialPointer } = loadDeck()
+  const { deck: initialDeck, pointer: initialPointer } = loadDeck(savedCategories)
   const deckRef = useRef(initialDeck)
   const pointerRef = useRef(initialPointer)
   const templateRef = useRef(null)
@@ -129,12 +159,49 @@ export default function App() {
     }
   }, [showReturningMsg])
 
+  function rebuildDeckForCategories(categories) {
+    const newDeck = categories.length === 0
+      ? shuffle(affirmations)
+      : shuffle(affirmations.filter(a => categories.includes(a.category)))
+    deckRef.current = newDeck
+    pointerRef.current = 0
+    saveDeck(newDeck, 0)
+    localStorage.setItem("deluludose-categories", JSON.stringify(categories))
+  } // <--- Added missing bracket here to close rebuildDeckForCategories
+
+ function handleCategoryToggle(category) {
+  setSelectedCategories(prev => {
+    if (prev.length === 1 && prev.includes(category)) return prev // min 1 always active
+    const next = prev.includes(category)
+      ? prev.filter(c => c !== category) // remove = exclude
+      : [...prev, category]              // add back = include
+    rebuildDeckForCategories(next)
+    return next
+  })
+  setIsFilteredDeckExhausted(false)
+}
+
+  function handleGoRandom() {
+  setSelectedCategories([...allCategories]) // all back = no filter
+  rebuildDeckForCategories([...allCategories])
+  setIsFilteredDeckExhausted(false)
+}
+  function handleRereadFiltered() {
+    rebuildDeckForCategories(selectedCategories)
+    setIsFilteredDeckExhausted(false)
+  }
+
   const handleNewAffirmation = useCallback(() => {
-    if (isLoading) return
+    if (isLoading || isFilteredDeckExhausted) return
     setIsLoading(true)
     setTimeout(() => {
       let pointer = pointerRef.current + 1
       if (pointer >= deckRef.current.length) {
+        if (isFiltered) {
+          setIsFilteredDeckExhausted(true)
+          setIsLoading(false)
+          return
+        }
         deckRef.current = shuffle(affirmations)
         pointer = 0
       }
@@ -144,7 +211,7 @@ export default function App() {
       setCurrent(next)
       setIsLoading(false)
     }, 500)
-  }, [isLoading])
+  }, [isLoading, isFiltered, isFilteredDeckExhausted])
 
   function handleCopy() {
     navigator.clipboard.writeText(current.text)
@@ -265,7 +332,7 @@ export default function App() {
               isDark ? "text-purple-400/60" : "text-sky-300/70"
             }`}
           >
-            your daily reality check ✦
+          ✦ your daily reality check ✦
           </motion.p>
 
           <StreakDisplay streak={streak} isNewDay={isNewDay} position="top" />
@@ -286,17 +353,71 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          {!showReturningMsg && <div className="mb-6" />}
+          {!showReturningMsg && <div className="mb-4" />}
+          <QuoteOfTheDay />
 
           <AffirmationCard
             affirmation={current}
             isFavorite={isFavorite(current.id)}
             onToggleFavorite={toggleFavorite}
+            allCategories={allCategories}
+            selectedCategories={selectedCategories}
+            onToggleCategory={handleCategoryToggle}
+            onGoRandom={handleGoRandom}
+            isFiltered={isFiltered}
           />
+
+          <AnimatePresence>
+            {isFilteredDeckExhausted && (
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+                className={`max-w-xl w-full mt-4 rounded-2xl p-5 text-center ${
+                  isDark
+                    ? "bg-[#1a1025] border border-purple-800/40"
+                    : "bg-sky-900/30 border border-sky-500/30"
+                }`}
+              >
+                <p className={`text-sm font-semibold mb-3 ${
+                  isDark ? "text-purple-200" : "text-sky-200"
+                }`}>
+                  ✦ you've seen all doses in these categories!
+                </p>
+                <div className="flex gap-3 justify-center">
+                  <motion.button
+                    onClick={handleRereadFiltered}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition-colors ${
+                      isDark
+                        ? "bg-purple-800 hover:bg-purple-700 text-purple-100"
+                        : "bg-sky-700 hover:bg-sky-600 text-sky-100"
+                    }`}
+                  >
+                    🔁 Re-read these
+                  </motion.button>
+                  <motion.button
+                    onClick={handleGoRandom}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition-colors border ${
+                      isDark
+                        ? "bg-fuchsia-900/50 hover:bg-fuchsia-900 text-fuchsia-200 border-fuchsia-700/40"
+                        : "bg-cyan-900/50 hover:bg-cyan-900 text-cyan-200 border-cyan-600/40"
+                    }`}
+                  >
+                    🎲 Go random
+                  </motion.button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <MoodReactions onMoodSelect={addMood} recentMoods={recentMoods} />
           <FunkyButton onClick={handleNewAffirmation} isLoading={isLoading} />
 
-           <div className="mt-4 flex items-center gap-5">
+          <div className="mt-4 flex items-center gap-5">
             <motion.button
               onClick={handleShareLink}
               whileHover={{ scale: 1.05 }}
@@ -328,10 +449,6 @@ export default function App() {
             onShare={handleAIShare}
             onSaveImage={handleAISaveImage}
           />
-
-          
-
-      
 
           <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
 

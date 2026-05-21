@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useThemeContext } from "../contexts/ThemeContext"
+import CategoryFilter from "./CategoryFilter"
 
-export default function AffirmationCard({ affirmation, isFavorite, onToggleFavorite }) {
+export default function AffirmationCard({ affirmation, isFavorite, onToggleFavorite, allCategories, selectedCategories, onToggleCategory, onGoRandom, isFiltered }) {
   const { isDark } = useThemeContext()
 
   return (
@@ -31,7 +32,14 @@ export default function AffirmationCard({ affirmation, isFavorite, onToggleFavor
         }`}>
           {affirmation.text}
         </p>
-
+        {/* Add this block after the quote <p> tag */}
+      <CategoryFilter
+        allCategories={allCategories}
+        selectedCategories={selectedCategories}
+        onToggle={onToggleCategory}
+        onGoRandom={onGoRandom}
+        isFiltered={isFiltered}
+      />
         <motion.button
           onClick={() => onToggleFavorite(affirmation)}
           whileHover={{ scale: 1.3 }}
