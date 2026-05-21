@@ -108,7 +108,7 @@ export default function MoodReactions({ onMoodSelect, recentMoods }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.3 }}
-            className="text-sm text-purple-300/80 text-center"
+            className={`text-sm text-center ${isDark ? "text-purple-300/80" : "text-sky-300/80"}`}
           >
             {feedback}
           </motion.p>

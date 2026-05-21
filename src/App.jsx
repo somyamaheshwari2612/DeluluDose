@@ -261,6 +261,14 @@ export default function App() {
     setCurrent(original)
   }
 
+  async function handleQOTDSaveImage(quote) {
+  const original = current
+  setCurrent({ ...current, text: quote.text, category: quote.category })
+  await new Promise((r) => setTimeout(r, 100))
+  await handleSaveImage()
+  setCurrent(original)
+}
+
   const actionColor = isDark
     ? "text-purple-400/70 hover:text-purple-300"
     : "text-sky-400/70 hover:text-sky-300"
@@ -355,7 +363,7 @@ export default function App() {
           </AnimatePresence>
 
           {!showReturningMsg && <div className="mb-4" />}
-          <QuoteOfTheDay />
+          <QuoteOfTheDay onSaveImage={handleQOTDSaveImage} />
 
           <AffirmationCard
             affirmation={current}
