@@ -478,7 +478,7 @@ export default function App() {
           </motion.p>
         </div>
 
-        <Analytics />
+        <Analytics mode="production" />
       </div>
     </ThemeContext.Provider>
   )
