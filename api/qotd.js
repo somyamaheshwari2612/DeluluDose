@@ -1,5 +1,13 @@
-const path = require("path")
-const affirmations = require(path.join(__dirname, "../src/data/affirmations.json"))
+import { readFileSync } from "fs"
+import { join, dirname } from "path"
+import { fileURLToPath } from "url"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const affirmations = JSON.parse(
+  readFileSync(join(__dirname, "../src/data/affirmations.json"), "utf-8")
+)
 
 function getTodaysQuote() {
   const today = new Date()
@@ -10,7 +18,7 @@ function getTodaysQuote() {
   return affirmations[seed % affirmations.length]
 }
 
-module.exports = (req, res) => {
+export default function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "https://cozync.vercel.app")
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS")
   res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate")
@@ -29,7 +37,12 @@ module.exports = (req, res) => {
       String(today.getDate()).padStart(2, "0"),
     ].join("-")
 
-    res.status(200).json({ id: quote.id, text: quote.text, category: quote.category, date })
+    res.status(200).json({
+      id: quote.id,
+      text: quote.text,
+      category: quote.category,
+      date,
+    })
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
