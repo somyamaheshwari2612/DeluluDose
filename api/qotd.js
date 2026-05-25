@@ -1,4 +1,5 @@
-const affirmations = require("../src/data/affirmations.json")
+const path = require("path")
+const affirmations = require(path.join(__dirname, "../src/data/affirmations.json"))
 
 function getTodaysQuote() {
   const today = new Date()
@@ -19,13 +20,17 @@ module.exports = (req, res) => {
     return
   }
 
-  const quote = getTodaysQuote()
-  const today = new Date()
-  const date = [
-    today.getFullYear(),
-    String(today.getMonth() + 1).padStart(2, "0"),
-    String(today.getDate()).padStart(2, "0"),
-  ].join("-")
+  try {
+    const quote = getTodaysQuote()
+    const today = new Date()
+    const date = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0"),
+    ].join("-")
 
-  res.status(200).json({ id: quote.id, text: quote.text, category: quote.category, date })
+    res.status(200).json({ id: quote.id, text: quote.text, category: quote.category, date })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 }
