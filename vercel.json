@@ -1,6 +1,7 @@
 {
   "version": 2,
   "rewrites": [
+    { "source": "/api/qotd", "destination": "/api/qotd.cjs" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
