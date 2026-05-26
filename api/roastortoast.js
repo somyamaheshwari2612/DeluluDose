@@ -19,23 +19,23 @@ Situation: "${situation}"
 
 Generate EXACTLY two responses:
 
-ROAST: One savage but not cruel sentence that calls out the delulu behavior with humor. Like a best friend who loves you but won't lie to you. Sharp, funny, a little unhinged. Max 20 words.
+ROAST: One savage and sharp, but not cruel sentence that calls out the delulu behavior with humor. Like a best friend who loves you but won't lie to you. Sharp, funny, a little unhinged. Max 40 words.
 
-TOAST: One warm but real sentence that celebrates the courage or chaos behind the situation. Not cringe-positive, just genuinely proud of them. Max 20 words.
+TOAST: One warm but real sentence that celebrates the courage or chaos behind the situation. Not cringe-positive, just genuinely proud of them. Optimistic. Max 40 words.
 
 Rules:
 - No emojis
 - No quotation marks
-- Sentence case only (first word capitalized, rest lowercase)
-- Must end with proper punctuation
+- Sentence case only (first word's first letter capitalized, rest lowercase)
+- Must end with proper punctuation, have proper punctuation, and no extra spaces
 - Sound like a real person, not a motivational poster
 - Be specific to the situation, not generic
-- ROAST should sting a little (lovingly)
-- TOAST should feel earned, not fake
+- ROAST should sting a little (lovingly or unhinged), but not be mean or damaging
+- TOAST should feel earned, not fake or cheesy(no the gross kind of cheesy)
 
 Return EXACTLY in this format, nothing else:
-ROAST: your roast here
-TOAST: your toast here`
+ROAST: Your roast here
+TOAST: Your toast here`
 
   try {
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
