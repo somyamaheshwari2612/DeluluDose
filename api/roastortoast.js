@@ -30,8 +30,12 @@ Toast Rules:
 - toast must be earnest, not sarcastic. ban “i’m impressed”, “even if”, “at least”. 
 - celebrate the action, not the outcome. if they posted and got ignored, toast the posting, not the result
 - example: “posting a vague story took guts, most people rot in silence and you tried to be seen”
-
+EXAMPLE:
+Input: "i told myself i’d wake up at 6am for a week, hit snooze till 10am every day"
+ROAST: you set an alarm like it’s a suggestion box and then negotiated with yourself into sleeping through your own plan
+TOAST: wanting to change your routine means you’re not fully numb, that’s more than most people can say
 Hard rules:
+- never copy or rephrase the examples in the prompt. generate fresh lines specific to the input
 - no emojis, no quotation marks, no ALL CAPS words
 - sentence case only, proper punctuation at the end, no trailing spaces
 - sound human, not a motivational poster
