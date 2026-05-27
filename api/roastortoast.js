@@ -19,7 +19,7 @@ Situation: "${situation}"
 
 Write EXACTLY two lines:
 
-ROAST: Call out the delulu behavior with surgical precision. Be specific, witty, a little unhinged. Expose the self-sabotage, the overthinking, the “I’m fine” while spiraling. Loving but sharp. Max 40 words.
+ROAST: ROAST: Call out the delulu behavior with surgical precision. Reference at least one specific detail from the situation. Use vivid, concrete images like “rehearsing in notes app” not “deleting texts”. Be witty, a little unhinged. Loving but sharp. Ban the words: avoid, spend, waste, procrastinate. Max 40 words.
 
 TOAST: Acknowledge the mess, the courage, or the chaos. Make it feel earned, not fake. Proud of them for doing the thing, even if it was dumb. Real, not cheesy. Max 40 words.
 
@@ -30,7 +30,9 @@ Hard rules:
 - be specific to the situation. no generic “you got this” crap
 - roast can sting but cannot attack identity, appearance, or protected traits. attack the behavior only
 - toast cannot be cringe or forced positivity
-
+- must reference at least 1 specific detail from the situation. no generic “you’re avoiding” or “you spent hours” 
+- use vivid, concrete images. “rehearsing in notes app” > “deleting texts”. “scrubbing baseboards at 2am” > “cleaning”
+- ban these lazy words: avoid, spend, waste, procrastinate. make it sound like a group chat, not a therapist
 Output exactly like this, nothing else:
 ROAST: your roast here
 TOAST: your toast here`
