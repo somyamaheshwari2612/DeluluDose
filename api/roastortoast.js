@@ -20,8 +20,16 @@ Situation: "${situation}"
 Write EXACTLY two lines:
 
 ROAST: ROAST: Call out the delulu behavior with surgical precision. Reference at least one specific detail from the situation. Use vivid, concrete images like “rehearsing in notes app” not “deleting texts”. Be witty, a little unhinged. Loving but sharp. Ban the words: avoid, spend, waste, procrastinate. Max 40 words.
+Roast Rules:
+- roast must show, not label. ban words like “form of”, “level of”, “new low”, “brutal”
+- start with the specific action + a sharp verb: “nuked 12 drafts”, “loitered on their story”, “scrubbed baseboards”
+- example: “nuked 12 drafts in notes then loitered on their story like that counts as a reply”
 
 TOAST: Acknowledge the mess, the courage, or the chaos. Make it feel earned, not fake. Proud of them for doing the thing, even if it was dumb. Real, not cheesy. Max 40 words.
+Toast Rules:
+- toast must be earnest, not sarcastic. ban “i’m impressed”, “even if”, “at least”. 
+- celebrate the action, not the outcome. if they posted and got ignored, toast the posting, not the result
+- example: “posting a vague story took guts, most people rot in silence and you tried to be seen”
 
 Hard rules:
 - no emojis, no quotation marks, no ALL CAPS words
