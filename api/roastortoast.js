@@ -33,6 +33,8 @@ Hard rules:
 - must reference at least 1 specific detail from the situation. no generic “you’re avoiding” or “you spent hours” 
 - use vivid, concrete images. “rehearsing in notes app” > “deleting texts”. “scrubbing baseboards at 2am” > “cleaning”
 - ban these lazy words: avoid, spend, waste, procrastinate. make it sound like a group chat, not a therapist
+- start the roast with the behavior itself, not “you’re” or “is a new level of”. jump straight in: “rehearsing 12 drafts in notes app” not “rehearsing in notes app is…”
+- use verbs that sting: nuke, loiter, spiral, bait, ghost, rot, delude. not “overthinking” or “desperate”
 Output exactly like this, nothing else:
 ROAST: your roast here
 TOAST: your toast here`
@@ -48,7 +50,9 @@ TOAST: your toast here`
         model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 150,
-        temperature: 0.95,
+        temperature: 1.0,
+        presence_penalty: 0.6,  // forces model to avoid repeating safe words like “level”, “new”, “pretty”
+        top_p: 0.9              // keeps it from going completely off the rails
       }),
     })
 
