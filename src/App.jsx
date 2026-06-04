@@ -19,6 +19,7 @@ import ThemeToggle from "./components/ThemeToggle"
 import QuoteOfTheDay from "./components/QuoteOfTheDay"
 import MoodCalendar from "./components/MoodCalendar"
 import RoastOrToast from "./components/RoastOrToast"
+import DeluluHoroscope from "./components/DeluluHoroscope"
 const RETURNING_MESSAGES = [
   "You were here last time. Ready to go deeper? ✦",
   "Welcome back. Time to explore beyond this. 💙",
@@ -462,6 +463,7 @@ export default function App() {
           <QuoteImageTemplate affirmation={current} templateRef={templateRef} />
 
           <FavoritesList favorites={favorites} onRemove={toggleFavorite} />
+          <DeluluHoroscope />
           <MoodCalendar moodHistory={moodHistory} />
           <StreakDisplay streak={streak} isNewDay={isNewDay} position="bottom" />
 
