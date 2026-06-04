@@ -119,7 +119,7 @@ export default function DeluluHoroscope() {
             : "bg-sky-900/30 border border-sky-600/30 text-sky-300 hover:bg-sky-900/50"
         }`}
       >
-        <span>♑ delulu horoscope · daily</span>
+        <span> delulu horoscope · daily</span>
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
