@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Keywords and mood are required" })
   }
 
-  const apiKey = process.env.GROQ_API_KEY
+  const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
     return res.status(500).json({ error: "API key not configured" })
   }
@@ -131,7 +131,7 @@ Return only the affirmation text. No labels, no explanations.
 
   try {
     const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
+      "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
       {
         method: "POST",
         headers: {
@@ -139,7 +139,7 @@ Return only the affirmation text. No labels, no explanations.
           "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
+          model: "gemini-3.1-flash-lite",
           messages: [{ role: "user", content: prompt }],
           max_tokens: 300,
           temperature: 0.9,
@@ -150,7 +150,7 @@ Return only the affirmation text. No labels, no explanations.
     const data = await response.json()
 
     if (!response.ok) {
-      return res.status(500).json({ error: data.error?.message || "Groq error" })
+      return res.status(500).json({ error: data.error?.message || "Gemini error" })
     }
 
     const raw = data.choices?.[0]?.message?.content?.trim()
