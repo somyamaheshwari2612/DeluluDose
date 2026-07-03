@@ -8,7 +8,7 @@ const CATEGORY_EMOJIS = {
   motivational: "💪", delulu: "✨", dreamy: "🌙", villain: "😈",
   cozy: "🧸", digital: "💻", absurdist: "🎪", midnight: "🕛",
   feral: "🐺", cosmic: "🌌", "chaos-romantic": "💥", poetic: "🪶",
-  recovery: "🌱", rebel: "⚡", "self-love": "💜", "tiny-win": "🎯",
+  recovery: "🌱", rebel: "⚡", "self-love": "💜", "tiny-win": "🎯", "random-thoughts":"👀",
 }
 
 export default function CategoryFilter({ allCategories, selectedCategories, onToggle, onGoRandom, isFiltered }) {
