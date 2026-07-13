@@ -47,7 +47,7 @@ export default function AffirmationCard({ affirmation, isFavorite, onToggleFavor
           className="absolute top-5 right-5 text-2xl cursor-pointer"
           aria-label="Toggle favorite"
         >
-          {isFavorite ? (isDark ? "💜" : "🩵") : isDark ? "🤍" : "🤍"}
+          {isFavorite ? (isDark ? "💜" : "💙") : isDark ? "🤍" : "🤍"}
         </motion.button>
       </motion.div>
     </AnimatePresence>

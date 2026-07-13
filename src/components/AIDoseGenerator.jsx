@@ -64,7 +64,7 @@ export default function AIDoseGenerator({ onShare, onSaveImage }) {
 
   async function handleGenerate() {
     const keywordList = keywords.split(",").map((k) => k.trim()).filter(Boolean)
-    if (keywordList.length === 0) { setError("Add at least one keyword 💙"); return }
+    if (keywordList.length === 0) { setError(`Add at least one keyword ${isDark ? '💜' : '💙'}`); return }
     if (!mood) { setError("Pick a mood to set the vibe 🎭"); return }
     if (keywordList.length > 5) { setError("Max 5 keywords — less is more ✦"); return }
 
@@ -90,7 +90,7 @@ export default function AIDoseGenerator({ onShare, onSaveImage }) {
       if (!res.ok) throw new Error(data.error || "Something went wrong")
       setResult(data.quote)
     } catch (err) {
-      setError(err.message || "Couldn't craft your dose. Try again! 💙")
+      setError(err.message || `Couldn't craft your dose. Try again! ${isDark ? '💜' : '💙'}`)
     } finally {
       setIsLoading(false)
     }

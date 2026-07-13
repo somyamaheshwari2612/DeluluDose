@@ -12,11 +12,11 @@ const MOODS = [
 ]
 
 const FEEDBACK = {
-  "😁": "Look at you, thriving! 😁💜",
+  "😁": "Look at you, thriving! 😁{HEART}",
   "🥰": "Okay, this one gave you ALL the feels. 🥰",
   "😎": "Main character energy activated. 😎✨",
-  "🫠": "Yeah... it got you, didn't it. 🫠💜",
-  "😭": "Let it out bestie, let it out. 😭💜",
+  "🫠": "Yeah... it got you, didn't it. 🫠{HEART}",
+  "😭": "Let it out bestie, let it out. 😭{HEART}",
   "🥹": "That little smile trying to hide? We see it. 🥹",
 }
 
@@ -50,7 +50,7 @@ export default function MoodReactions({ onMoodSelect, recentMoods }) {
 
   function handleMoodClick(mood) {
     setSelected(mood.emoji)
-    setFeedback(FEEDBACK[mood.emoji])
+    setFeedback(FEEDBACK[mood.emoji].replace("{HEART}", isDark ? "💜" : "💙"))
     onMoodSelect(mood.emoji)
     setTimeout(() => {
       setSelected(null)

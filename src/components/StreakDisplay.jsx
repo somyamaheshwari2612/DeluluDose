@@ -14,13 +14,15 @@ const STREAK_MESSAGES = {
   30: "30 doses. You didn't come this far to only come this far. 👑",
 }
 
-const COMEBACK_QUOTES = [
-  "Come back tomorrow. Your future self is counting on it. ✦",
-  "Tomorrow's dose might be the one that changes everything. 💙",
-  "The streak won't keep itself alive. See you tomorrow? 🔥",
-  "One more day = one more level up. Don't break the chain. ⚡",
-  "Your delusion deserves daily maintenance. Come back. 🫠",
-]
+function getComebackQuotes(isDark) {
+  return [
+    "Come back tomorrow. Your future self is counting on it. ✦",
+    `Tomorrow's dose might be the one that changes everything. ${isDark ? '💜' : '💙'}`,
+    "The streak won't keep itself alive. See you tomorrow? 🔥",
+    "One more day = one more level up. Don't break the chain. ⚡",
+    "Your delusion deserves daily maintenance. Come back. 🫠",
+  ];
+}
 
 function getStreakMessage(streak) {
   const milestones = Object.keys(STREAK_MESSAGES).map(Number).filter((m) => streak >= m)
@@ -29,9 +31,10 @@ function getStreakMessage(streak) {
   return STREAK_MESSAGES[closest]
 }
 
-function getDailyComeback() {
+function getDailyComeback(isDark) {
   const dayIndex = new Date().getDay()
-  return COMEBACK_QUOTES[dayIndex % COMEBACK_QUOTES.length]
+  const quotes = getComebackQuotes(isDark)
+  return quotes[dayIndex % quotes.length]
 }
 
 export default function StreakDisplay({ streak, isNewDay, position }) {
@@ -113,7 +116,7 @@ export default function StreakDisplay({ streak, isNewDay, position }) {
             </span>
           </div>
           <p className={`text-xs text-center italic mt-1 ${faint}`}>
-            {getDailyComeback()}
+            {getDailyComeback(isDark)}
           </p>
         </motion.div>
       )}

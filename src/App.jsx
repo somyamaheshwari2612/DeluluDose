@@ -20,18 +20,21 @@ import QuoteOfTheDay from "./components/QuoteOfTheDay"
 import MoodCalendar from "./components/MoodCalendar"
 import RoastOrToast from "./components/RoastOrToast"
 import DeluluHoroscope from "./components/DeluluHoroscope"
-const RETURNING_MESSAGES = [
-  "You were here last time. Ready to go deeper? ✦",
-  "Welcome back. Time to explore beyond this. 💙",
-  "Still you. Still here. Still growing. ❤️‍🔥",
-  "Back again? The delusion continues. 😎",
-  "Your doses missed you. Let's go. ✨",
-  "Returning users get extra potent doses. 🔮",
-]
+function getReturningMessages(isDark) {
+  return [
+    "You were here last time. Ready to go deeper? ✦",
+    `Welcome back. Time to explore beyond this. ${isDark ? '💜' : '💙'}`,
+    "Still you. Still here. Still growing. ❤️‍🔥",
+    "Back again? The delusion continues. 😎",
+    "Your doses missed you. Let's go. ✨",
+    "Returning users get extra potent doses. 🔮",
+  ]
+}
 
-function getDailyReturningMessage() {
+function getDailyReturningMessage(isDark) {
   const day = new Date().getDay()
-  return RETURNING_MESSAGES[day % RETURNING_MESSAGES.length]
+  const messages = getReturningMessages(isDark)
+  return messages[day % messages.length]
 }
 
 function shuffle(arr) {
@@ -95,22 +98,27 @@ function saveDeck(deck, pointer) {
   localStorage.setItem("deluludose-pointer", pointer.toString())
 }
 
-const names = ["SM 💙", "Somya 💙", "SaMi 💙"]
+function getNames(isDark) {
+  const heart = isDark ? "💜" : "💙"
+  return [`SM ${heart}`, `Somya ${heart}`, `SaMi ${heart}`]
+}
 
 function FlippingName({ isDark }) {
   const [index, setIndex] = useState(0)
   const [flipping, setFlipping] = useState(false)
+  
+  const currentNames = getNames(isDark)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setFlipping(true)
       setTimeout(() => {
-        setIndex((prev) => (prev + 1) % names.length)
+        setIndex((prev) => (prev + 1) % currentNames.length)
         setFlipping(false)
       }, 400)
     }, 5000)
     return () => clearInterval(interval)
-  }, [])
+  }, [currentNames.length])
 
   return (
     <motion.span
@@ -127,7 +135,7 @@ function FlippingName({ isDark }) {
           : "from-sky-400 via-cyan-300 to-blue-400"
       }`}
     >
-      {names[index]}
+      {currentNames[index]}
     </motion.span>
   )
 }
@@ -358,7 +366,7 @@ export default function App() {
                   isDark ? "text-purple-400/50" : "text-sky-300/50"
                 }`}
               >
-                {getDailyReturningMessage()}
+                {getDailyReturningMessage(isDark)}
               </motion.p>
             )}
           </AnimatePresence>
